@@ -28,7 +28,7 @@ Automated via `.github/workflows/deploy.yml` on push to `main`. GitHub Pages ser
 
 Out of 23 visual slots in this build, 22 are client-original imagery scraped from csm-rivaltaditorino.it (portfolio work: Torino metro GTT elevators, highway toll gantries, prison fit-outs, pensiline, cancelli, ringhiere). The remaining asset credit:
 
-- **Welding workshop video (hero background loop):** "A person welding steel in the workshop" by **Pawel Film** via Pexels — https://www.pexels.com/video/a-person-welding-steel-in-the-workshop-4159862/
+- **Workshop atmospheric video (hero background loop):** "Metal Grinding Sparks with Angle Grinder" by **Israyosoy S.** via Pexels — https://www.pexels.com/video/metal-grinding-sparks-with-angle-grinder-34127178/
 
 The logo is a generic hammer icon sourced from the client's own CDN and is flagged for replacement with a proper wordmark before production.
 
