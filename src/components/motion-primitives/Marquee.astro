@@ -1,0 +1,125 @@
+---
+/**
+ * Marquee — infinite-loop horizontal ticker. Pure CSS keyframe animation,
+ * zero JS. Content is duplicated once so the loop is seamless.
+ *
+ * Used for: trust logo rows, client/award marquees, repeating tagline bands,
+ * "since 1998 —" horizontal banners.
+ *
+ * The slot receives the content ONCE. The component clones it via a second
+ * slot wrapper for the infinite-loop trick. Author once, render twice.
+ *
+ * Props:
+ *   - speed: seconds for ONE full loop. Default 30. Lower = faster.
+ *   - direction: 'left' | 'right'. Default 'left'.
+ *   - gap: CSS gap between repeated items. Default '3rem'.
+ *   - pauseOnHover: default true.
+ *   - vertical: if true, marquee runs top↔bottom instead. Default false.
+ *   - class passthrough.
+ *
+ * Usage:
+ *   <Marquee speed={40}>
+ *     <span>BRAND ONE</span>
+ *     <span>BRAND TWO</span>
+ *     <span>BRAND THREE</span>
+ *   </Marquee>
+ *
+ *   For logos:
+ *   <Marquee speed={60}>
+ *     {logos.map((l) => <img src={l.src} alt={l.name} />)}
+ *   </Marquee>
+ */
+interface Props {
+  speed?: number;
+  direction?: 'left' | 'right';
+  gap?: string;
+  pauseOnHover?: boolean;
+  vertical?: boolean;
+  class?: string;
+}
+
+const {
+  speed = 30,
+  direction = 'left',
+  gap = '3rem',
+  pauseOnHover = true,
+  vertical = false,
+  class: className = '',
+} = Astro.props;
+
+const keyframe = vertical
+  ? (direction === 'left' ? 'marquee-up' : 'marquee-down')
+  : (direction === 'left' ? 'marquee-left' : 'marquee-right');
+---
+
+<div
+  class:list={['marquee', className, pauseOnHover && 'marquee--pausable', vertical && 'marquee--vertical']}
+  style={`--marquee-duration: ${speed}s; --marquee-gap: ${gap}; --marquee-keyframe: ${keyframe};`}
+  role="marquee"
+  aria-hidden="true"
+>
+  <div class="marquee__track">
+    <div class="marquee__set">
+      <slot />
+    </div>
+    <div class="marquee__set" aria-hidden="true">
+      <slot />
+    </div>
+  </div>
+</div>
+
+<style>
+  .marquee {
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+  }
+  .marquee__track {
+    display: flex;
+    flex: 0 0 auto;
+    gap: var(--marquee-gap, 3rem);
+    animation: var(--marquee-keyframe, marquee-left) var(--marquee-duration, 30s) linear infinite;
+    will-change: transform;
+  }
+  .marquee__set {
+    display: flex;
+    flex: 0 0 auto;
+    gap: var(--marquee-gap, 3rem);
+    align-items: center;
+  }
+  .marquee--pausable:hover .marquee__track {
+    animation-play-state: paused;
+  }
+  .marquee--vertical {
+    height: 100%;
+    max-height: 60vh;
+    flex-direction: column;
+  }
+  .marquee--vertical .marquee__track {
+    flex-direction: column;
+  }
+  .marquee--vertical .marquee__set {
+    flex-direction: column;
+  }
+  @keyframes marquee-left {
+    from { transform: translateX(0); }
+    to   { transform: translateX(calc(-50% - var(--marquee-gap, 3rem) / 2)); }
+  }
+  @keyframes marquee-right {
+    from { transform: translateX(calc(-50% - var(--marquee-gap, 3rem) / 2)); }
+    to   { transform: translateX(0); }
+  }
+  @keyframes marquee-up {
+    from { transform: translateY(0); }
+    to   { transform: translateY(calc(-50% - var(--marquee-gap, 3rem) / 2)); }
+  }
+  @keyframes marquee-down {
+    from { transform: translateY(calc(-50% - var(--marquee-gap, 3rem) / 2)); }
+    to   { transform: translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee__track {
+      animation: none;
+    }
+  }
+</style>

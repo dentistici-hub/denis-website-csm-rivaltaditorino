@@ -8,6 +8,7 @@ import ContentAboutProse from '@components/content/ContentAboutProse.astro';
 import ContactSplit from '@components/contact/ContactSplit.astro';
 import FooterMinimal from '@components/footer/FooterMinimal.astro';
 import NumberedChapter from '@components/motion-primitives/NumberedChapter.astro';
+import Marquee from '@components/motion-primitives/Marquee.astro';
 import HeroPinnedWelder from '../components/signature/HeroPinnedWelder.astro';
 
 import {
@@ -71,11 +72,33 @@ const withBase = (p: string | undefined): string | undefined => {
       sectionId="about"
     />
 
+    <!-- 2b. TAGLINE MARQUEE — the 8 specialisations on a loop, shop-drawing voice. -->
+    <section class="tagline-band" aria-label="Specializzazioni">
+      <Marquee speed={48} gap="clamp(2rem, 4vw, 4rem)">
+        <span class="tagline-band__item">Cancelli</span>
+        <span class="tagline-band__dot" aria-hidden="true">//</span>
+        <span class="tagline-band__item">Ringhiere</span>
+        <span class="tagline-band__dot" aria-hidden="true">//</span>
+        <span class="tagline-band__item">Infissi carcerari</span>
+        <span class="tagline-band__dot" aria-hidden="true">//</span>
+        <span class="tagline-band__item">Carpenteria</span>
+        <span class="tagline-band__dot" aria-hidden="true">//</span>
+        <span class="tagline-band__item">Saldatura</span>
+        <span class="tagline-band__dot" aria-hidden="true">//</span>
+        <span class="tagline-band__item">Strutture metalliche</span>
+        <span class="tagline-band__dot" aria-hidden="true">//</span>
+        <span class="tagline-band__item">Coperture</span>
+        <span class="tagline-band__dot" aria-hidden="true">//</span>
+        <span class="tagline-band__item">Montaggi meccanici</span>
+        <span class="tagline-band__dot" aria-hidden="true">//</span>
+      </Marquee>
+    </section>
+
     <!-- 3. SERVICES — three NumberedChapter wrappers, sticky numerals -->
     <section class="services-wrap section" id="services" aria-labelledby="services-heading">
       <div class="container">
         <header class="services-wrap__header" data-animate>
-          <p class="services-wrap__eyebrow">Cosa facciamo</p>
+          <p class="services-wrap__eyebrow">Lavorazioni</p>
           <h2 class="services-wrap__title" id="services-heading">Dalla materia al cantiere</h2>
           <p class="services-wrap__intro">Otto lavorazioni specialistiche, organizzate in tre momenti del mestiere: ciò che fabbrichiamo in officina, ciò che posiamo sul campo, ciò che manteniamo nel tempo.</p>
         </header>
@@ -243,6 +266,30 @@ const withBase = (p: string | undefined): string | undefined => {
   }
   .services-wrap__header {
     margin-bottom: var(--space-lg);
+  }
+
+  /* Tagline band — Anton display across a tight horizontal strip. */
+  .tagline-band {
+    border-block: 1px solid color-mix(in srgb, var(--color-fg) 12%, transparent);
+    padding-block: clamp(1rem, 2.2vw, 1.8rem);
+    background: var(--color-bg);
+  }
+  .tagline-band__item {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3.2vw, 2.6rem);
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    color: var(--color-fg);
+    white-space: nowrap;
+  }
+  .tagline-band__dot {
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: clamp(1rem, 2.4vw, 1.8rem);
+    letter-spacing: 0.1em;
+    color: var(--color-accent);
+    opacity: 0.65;
   }
 
   /* Atmospheric band — video or image, full-bleed 21:9 */

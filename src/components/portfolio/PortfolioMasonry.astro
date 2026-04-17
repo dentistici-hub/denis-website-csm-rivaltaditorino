@@ -247,10 +247,30 @@ const withBase = (p: string | undefined): string | undefined => {
       border-color var(--duration-fast, 180ms) var(--ease-out, ease);
   }
 
+  .pmasonry__tile::after {
+    /* Thin accent rule at the top, drawn on hover — shop-drawing guideline feel. */
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--color-accent);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 320ms cubic-bezier(.19, 1, .22, 1);
+    z-index: 2;
+  }
+
   .pmasonry__tile:hover,
   .pmasonry__tile:focus-visible {
     transform: translateY(-2px);
     border-color: var(--color-accent);
+  }
+
+  .pmasonry__tile:hover::after,
+  .pmasonry__tile:focus-visible::after {
+    transform: scaleX(1);
   }
 
   .pmasonry__tile:focus-visible {
@@ -261,12 +281,20 @@ const withBase = (p: string | undefined): string | undefined => {
   .pmasonry__fig {
     margin: 0;
     position: relative;
+    overflow: hidden;
   }
 
   .pmasonry__img {
     width: 100%;
     height: auto;
     display: block;
+    transition: transform 520ms cubic-bezier(.19, 1, .22, 1);
+    will-change: transform;
+  }
+
+  .pmasonry__tile:hover .pmasonry__img,
+  .pmasonry__tile:focus-visible .pmasonry__img {
+    transform: scale(1.04);
   }
 
   .pmasonry__placeholder {

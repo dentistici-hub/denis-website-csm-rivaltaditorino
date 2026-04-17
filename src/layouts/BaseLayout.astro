@@ -59,12 +59,136 @@ const fullTitle = `${title} | ${site.name}`;
     />
   </head>
   <body>
+    {/* Thin scroll-progress rule — forge-orange measuring gauge across the top. */}
+    <div class="scroll-progress" aria-hidden="true">
+      <span class="scroll-progress__fill"></span>
+    </div>
+
     <slot />
+
+    {/* Floating phone CTA — appears after the user passes the hero, stays
+        bottom-right on desktop, bottom-full-width pill on mobile. */}
+    <a
+      href="tel:+390119002640"
+      class="float-call"
+      aria-label="Chiama C.S.M. Bertacco al +39 011 9002640"
+    >
+      <span class="float-call__ring" aria-hidden="true"></span>
+      <span class="float-call__icon" aria-hidden="true">&#9742;</span>
+      <span class="float-call__label">Chiama ora</span>
+    </a>
+
     {isDemo && <DemoBanner enabled={isDemo} message={demoMessage} />}
 
     <script>
       import { initAnimations } from '@components/animations/animations.ts';
       initAnimations();
+
+      // Scroll progress — writes CSS var --scroll-progress 0..1 on <body>.
+      // The .scroll-progress__fill scales its width by that var.
+      (() => {
+        const docEl = document.documentElement;
+        const body = document.body;
+        let ticking = false;
+        const update = () => {
+          const max = (docEl.scrollHeight - window.innerHeight) || 1;
+          const p = Math.min(1, Math.max(0, window.scrollY / max));
+          body.style.setProperty('--scroll-progress', p.toFixed(4));
+          // Surface floating CTA once user is past roughly one viewport (i.e. past hero).
+          if (window.scrollY > window.innerHeight * 0.6) {
+            body.classList.add('show-float-call');
+          } else {
+            body.classList.remove('show-float-call');
+          }
+          ticking = false;
+        };
+        const onScroll = () => {
+          if (ticking) return;
+          ticking = true;
+          requestAnimationFrame(update);
+        };
+        window.addEventListener('scroll', onScroll, { passive: true });
+        update();
+      })();
     </script>
+
+    <style is:global>
+      /* Scroll progress bar */
+      .scroll-progress {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        z-index: 100;
+        pointer-events: none;
+        background: transparent;
+      }
+      .scroll-progress__fill {
+        display: block;
+        height: 100%;
+        width: 100%;
+        background: var(--color-accent, #A8370F);
+        transform-origin: left center;
+        transform: scaleX(var(--scroll-progress, 0));
+        transition: transform 60ms linear;
+      }
+
+      /* Floating Chiama ora — hidden by default; .show-float-call on body reveals it. */
+      .float-call {
+        position: fixed;
+        right: clamp(1rem, 2vw, 1.5rem);
+        bottom: clamp(4rem, 6vw, 2rem);
+        display: inline-flex;
+        align-items: center;
+        gap: 0.55em;
+        padding: 0.85rem 1.4rem 0.85rem 1rem;
+        background: var(--color-accent, #A8370F);
+        color: var(--color-bg, #F5F1EA);
+        font-family: var(--font-body);
+        font-weight: 600;
+        font-size: 0.9rem;
+        letter-spacing: 0.02em;
+        text-decoration: none;
+        border-radius: 999px;
+        box-shadow: 0 8px 22px rgba(18, 18, 18, 0.18);
+        transform: translateY(140%);
+        opacity: 0;
+        transition: transform 380ms cubic-bezier(.19, 1, .22, 1), opacity 260ms linear, background-color 180ms linear;
+        z-index: 90;
+      }
+      body.show-float-call .float-call {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      .float-call:hover { background: var(--color-accent-hover, #8A2D0C); }
+      .float-call__ring {
+        display: inline-block;
+        width: 0.6em;
+        height: 0.6em;
+        border-radius: 50%;
+        background: currentColor;
+        opacity: 0.2;
+        animation: float-call-pulse 2.2s ease-in-out infinite;
+      }
+      @keyframes float-call-pulse {
+        0%, 100% { transform: scale(0.8); opacity: 0.2; }
+        50%      { transform: scale(1.4); opacity: 0.6; }
+      }
+      .float-call__icon { font-size: 1.05em; line-height: 1; }
+      @media (max-width: 600px) {
+        .float-call {
+          left: 1rem;
+          right: 1rem;
+          bottom: 4.2rem; /* clears demo banner */
+          justify-content: center;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .float-call { transition: opacity 120ms linear; }
+        .float-call__ring { animation: none; }
+        .scroll-progress__fill { transition: none; }
+      }
+    </style>
   </body>
 </html>

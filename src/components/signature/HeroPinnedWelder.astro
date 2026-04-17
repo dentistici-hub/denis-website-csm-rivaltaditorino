@@ -2,20 +2,19 @@
 /**
  * HeroPinnedWelder — the signature move for CSM.
  *
+ * Rule: primary content (headline, subtitle, CTA, anchor stat) is LEGIBLE
+ * FROM FIRST PAINT at progress=0. Scroll does NOT hide or reveal the core
+ * message — scroll scrubs ATMOSPHERE.
+ *
  * Shape: HeroSplit-style two-column hero (text left, welder photo right)
- * nested INSIDE a ScrollPinSection. The `--progress` CSS variable written by
- * the pin primitive drives:
- *   - photo scale 1.00 -> 1.06 and brightness 1.0 -> 0.55
- *   - display headline translateY: arrives from -20vh and settles at 0
- *   - subtitle: fades in after progress >= 0.35
- *   - CTA: translates up 10vh across progress 0.5 -> 1.0
+ * nested INSIDE a ScrollPinSection. The `--progress` CSS variable drives:
+ *   - photo scale 1.00 -> 1.04 and brightness 1.0 -> 0.7 (subtle, gives depth)
+ *   - photo scrim opacity 0 -> 0.35 (darkens photo into a frame)
+ *   - accent measurement rule draws across under the eyebrow (left-to-right)
+ *   - headline letter-spacing tightens from 0 to -0.015em (breath of craft)
  *
  * Reduced motion: the ScrollPinSection primitive force-sets --progress=1, so
  * every child lands at its final state immediately (no animation).
- *
- * The numeral mark "50+ ANNI" anchors the composition at the bottom of the
- * text column. It is static; the counter below the fold (TrustHeritage) is
- * where the live tick happens.
  */
 import ScrollPinSection from '../motion-primitives/ScrollPinSection.astro';
 
@@ -62,7 +61,12 @@ const withBase = (p: string | undefined): string | undefined => {
 >
   <div class="hero-welder__grid">
     <div class="hero-welder__text">
-      <p class="hero-welder__eyebrow">Carpenteria metallica &middot; Rivalta di Torino</p>
+      <p class="hero-welder__eyebrow">
+        <span class="hero-welder__eyebrow-rule" aria-hidden="true"></span>
+        <span>Carpenteria metallica</span>
+        <span class="hero-welder__eyebrow-sep" aria-hidden="true">·</span>
+        <span>Rivalta di Torino</span>
+      </p>
       <h1 class="hero-welder__headline">{headline}</h1>
       <p class="hero-welder__subtitle">{subtitle}</p>
       <div class="hero-welder__actions">
@@ -138,6 +142,35 @@ const withBase = (p: string | undefined): string | undefined => {
     text-transform: uppercase;
     color: var(--color-accent);
     margin-bottom: var(--space-md);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.7em;
+    row-gap: 0.25em;
+  }
+
+  .hero-welder__eyebrow-rule {
+    display: inline-block;
+    width: clamp(1.5rem, 6vw, 4rem);
+    height: 1px;
+    /* The rule grows as scroll progresses — a measurement line being drawn. */
+    background: currentColor;
+    transform-origin: left center;
+    transform: scaleX(calc(0.2 + var(--progress, 0) * 0.8));
+    transition: transform 80ms linear;
+    margin-right: 0.2em;
+  }
+
+  .hero-welder__eyebrow-sep {
+    opacity: 0.5;
+  }
+
+  /* Tighten on narrow viewports so the line doesn't wrap awkwardly. */
+  @media (max-width: 520px) {
+    .hero-welder__eyebrow {
+      letter-spacing: 0.12em;
+      font-size: 0.72rem;
+    }
   }
 
   .hero-welder__headline {
@@ -145,14 +178,12 @@ const withBase = (p: string | undefined): string | undefined => {
     font-size: var(--text-display);
     line-height: 0.9;
     text-transform: uppercase;
-    letter-spacing: 0;
+    /* Letter-spacing tightens subtly as user scrolls — a breath of craft without hiding the word. */
+    letter-spacing: calc(var(--progress, 0) * -0.015em);
     color: var(--color-fg);
     max-width: 14ch;
     margin-bottom: var(--space-md);
-    /* Pin-driven transform */
-    transform: translateY(calc((1 - var(--progress, 0)) * -20vh));
-    opacity: var(--progress, 0);
-    transition: transform 40ms linear, opacity 40ms linear;
+    transition: letter-spacing 80ms linear;
   }
 
   .hero-welder__subtitle {
@@ -163,19 +194,12 @@ const withBase = (p: string | undefined): string | undefined => {
     color: var(--color-fg);
     max-width: 48ch;
     margin-bottom: var(--space-lg);
-    /* Fade in after progress >= 0.35 */
-    opacity: clamp(0, calc((var(--progress, 0) - 0.35) / 0.3), 1);
-    transition: opacity 60ms linear;
   }
 
   .hero-welder__actions {
     display: flex;
     gap: var(--space-md);
     margin-bottom: var(--space-xl);
-    /* CTA translates up 10vh across progress 0.5 -> 1.0 */
-    transform: translateY(calc((1 - clamp(0, (var(--progress, 0) - 0.5) / 0.5, 1)) * 10vh));
-    opacity: clamp(0, calc((var(--progress, 0) - 0.5) / 0.3), 1);
-    transition: transform 60ms linear, opacity 60ms linear;
   }
 
   .hero-welder__cta {
@@ -252,9 +276,10 @@ const withBase = (p: string | undefined): string | undefined => {
     height: 100%;
     object-fit: cover;
     display: block;
-    /* Pin-driven scale + brightness */
-    transform: scale(calc(1 + var(--progress, 0) * 0.06));
-    filter: brightness(calc(1 - var(--progress, 0) * 0.45));
+    /* Subtle pin-driven scale + brightness. Numbers kept gentle so the
+       welder face never turns to silhouette — the human is the subject. */
+    transform: scale(calc(1 + var(--progress, 0) * 0.04));
+    filter: brightness(calc(1 - var(--progress, 0) * 0.3));
     will-change: transform, filter;
     transition: transform 60ms linear, filter 60ms linear;
   }
