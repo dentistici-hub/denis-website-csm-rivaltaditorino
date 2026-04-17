@@ -1,0 +1,124 @@
+---
+/**
+ * KenBurnsImage — the slow pan-and-zoom effect named for documentary film
+ * director Ken Burns. A still photograph feels alive via imperceptibly slow
+ * scale + translate loops.
+ *
+ * Zero JS. CSS keyframes only. One image, one slow animation, no external
+ * dependency. Respects reduced-motion (renders as static).
+ *
+ * Best for: hero stills, section dividers with imagery, about pages. NOT for
+ * card thumbnails or trust logos — too subtle to notice at small sizes.
+ *
+ * Props:
+ *   - src: string — required.
+ *   - alt: string — required.
+ *   - direction: 'in' | 'out' | 'pan-left' | 'pan-right' | 'drift'. Default 'drift'.
+ *   - duration: seconds for one cycle. Default 20. Long = subtle.
+ *   - intensity: 0..1 — how far the image scales/translates. Default 0.3.
+ *   - aspectRatio: string — CSS aspect-ratio. Default '16 / 9'.
+ *   - class passthrough.
+ *
+ * Usage:
+ *   <KenBurnsImage
+ *     src="/images/hero.jpg"
+ *     alt="Atelier floor at golden hour"
+ *     direction="drift"
+ *     duration={28}
+ *     aspectRatio="21 / 9"
+ *   />
+ */
+type Direction = 'in' | 'out' | 'pan-left' | 'pan-right' | 'drift';
+
+interface Props {
+  src: string;
+  alt: string;
+  direction?: Direction;
+  duration?: number;
+  intensity?: number;
+  aspectRatio?: string;
+  class?: string;
+}
+
+const {
+  src,
+  alt,
+  direction = 'drift',
+  duration = 20,
+  intensity = 0.3,
+  aspectRatio = '16 / 9',
+  class: className = '',
+} = Astro.props;
+
+const i = Math.max(0, Math.min(1, intensity));
+// Scale + translate amounts derived from intensity.
+const maxScale = 1 + 0.15 * i;   // e.g. 1.045 at default
+const maxShift = 4 * i;           // in % — e.g. 1.2% at default
+
+// Prefix asset paths with Astro's base URL so images resolve under GH Pages sub-path deploys.
+const withBase = (p: string | undefined): string | undefined => {
+  if (!p) return p;
+  if (/^(https?:\/\/|data:)/.test(p)) return p;
+  const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+  return p.startsWith('/') ? `${base}${p}` : `${base}/${p}`;
+};
+---
+
+<figure
+  class:list={['kenburns', `kenburns--${direction}`, className]}
+  style={`aspect-ratio: ${aspectRatio}; --kb-duration: ${duration}s; --kb-scale: ${maxScale}; --kb-shift: ${maxShift}%;`}
+>
+  <img class="kenburns__img" src={withBase(src)} alt={alt} loading="lazy" decoding="async" />
+</figure>
+
+<style>
+  .kenburns {
+    display: block;
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+  }
+  .kenburns__img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform-origin: center;
+    will-change: transform;
+    animation-duration: var(--kb-duration, 20s);
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+  }
+  .kenburns--in .kenburns__img   { animation-name: kb-zoom-in; }
+  .kenburns--out .kenburns__img  { animation-name: kb-zoom-out; }
+  .kenburns--pan-left .kenburns__img  { animation-name: kb-pan-left; }
+  .kenburns--pan-right .kenburns__img { animation-name: kb-pan-right; }
+  .kenburns--drift .kenburns__img     { animation-name: kb-drift; }
+
+  @keyframes kb-zoom-in {
+    from { transform: scale(1) translate(0, 0); }
+    to   { transform: scale(var(--kb-scale, 1.15)) translate(0, 0); }
+  }
+  @keyframes kb-zoom-out {
+    from { transform: scale(var(--kb-scale, 1.15)) translate(0, 0); }
+    to   { transform: scale(1) translate(0, 0); }
+  }
+  @keyframes kb-pan-left {
+    from { transform: scale(var(--kb-scale, 1.15)) translate(var(--kb-shift, 4%), 0); }
+    to   { transform: scale(var(--kb-scale, 1.15)) translate(calc(-1 * var(--kb-shift, 4%)), 0); }
+  }
+  @keyframes kb-pan-right {
+    from { transform: scale(var(--kb-scale, 1.15)) translate(calc(-1 * var(--kb-shift, 4%)), 0); }
+    to   { transform: scale(var(--kb-scale, 1.15)) translate(var(--kb-shift, 4%), 0); }
+  }
+  @keyframes kb-drift {
+    from { transform: scale(1) translate(0, 0); }
+    50%  { transform: scale(var(--kb-scale, 1.15)) translate(calc(-1 * var(--kb-shift, 4%)), 0); }
+    to   { transform: scale(1) translate(0, calc(-1 * var(--kb-shift, 4%))); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .kenburns__img { animation: none; transform: none; }
+  }
+</style>

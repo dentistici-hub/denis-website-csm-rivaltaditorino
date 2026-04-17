@@ -1,0 +1,390 @@
+---
+import type { SiteConfig } from '../../types/content';
+
+interface Labels {
+  name: string;
+  company: string;
+  email: string;
+  phone: string;
+  message: string;
+  namePlaceholder: string;
+  companyPlaceholder: string;
+  emailPlaceholder: string;
+  phonePlaceholder: string;
+  messagePlaceholder: string;
+  submit: string;
+  phoneInfo: string;
+  emailInfo: string;
+  directions: string;
+  addressCountry: string;
+}
+
+interface Props {
+  site: SiteConfig;
+  officeTitle?: string;
+  eyebrow?: string;
+  title?: string;
+  intro?: string;
+  labels?: Partial<Labels>;
+  action?: string;
+  method?: string;
+  gdprConsentLabel?: string;
+  privacyHref?: string;
+}
+
+const defaultLabels: Labels = {
+  name: 'Nome e cognome',
+  company: 'Azienda (se applicabile)',
+  email: 'Email',
+  phone: 'Telefono',
+  message: 'Descrivi il tuo progetto',
+  namePlaceholder: 'Mario Rossi',
+  companyPlaceholder: 'Rossi S.r.l.',
+  emailPlaceholder: 'mario.rossi@email.it',
+  phonePlaceholder: '+39 011 000 0000',
+  messagePlaceholder: 'Poche righe sul lavoro: misure, luogo, tempi. Rispondiamo entro un giorno lavorativo.',
+  submit: 'Invia richiesta',
+  phoneInfo: 'Telefono',
+  emailInfo: 'Email',
+  directions: 'Indicazioni stradali',
+  addressCountry: 'Italia',
+};
+
+const {
+  site,
+  officeTitle = site.contact.city ? `Officina di ${site.contact.city}` : 'Officina',
+  eyebrow = 'Contattaci',
+  title = 'Parliamo del tuo lavoro',
+  intro = 'Chiamaci per misure, sopralluoghi o una stima rapida. Rispondiamo al telefono dal lunedì al venerdì, di mattina e pomeriggio.',
+  labels: labelsProp = {},
+  action,
+  method = 'POST',
+  gdprConsentLabel,
+  privacyHref,
+} = Astro.props;
+
+const labels: Labels = { ...defaultLabels, ...labelsProp };
+---
+
+<section class="contact section" id="contact" aria-labelledby="contact-title">
+  <div class="container">
+    <div class="contact__grid">
+      <div class="contact__form-col" data-animate>
+        <p class="contact__eyebrow">{eyebrow}</p>
+        <h2 class="contact__title" id="contact-title">{title}</h2>
+        <p class="contact__intro">{intro}</p>
+
+        <form class="contact__form" name="contact" method={action ? method : undefined} action={action} novalidate>
+          <div class="contact__row">
+            <div class="contact__field">
+              <label class="contact__label" for="cf-name">{labels.name}</label>
+              <input class="contact__input" id="cf-name" name="name" type="text" required autocomplete="name" placeholder={labels.namePlaceholder} />
+            </div>
+            <div class="contact__field">
+              <label class="contact__label" for="cf-company">{labels.company}</label>
+              <input class="contact__input" id="cf-company" name="company" type="text" autocomplete="organization" placeholder={labels.companyPlaceholder} />
+            </div>
+          </div>
+          <div class="contact__row">
+            <div class="contact__field">
+              <label class="contact__label" for="cf-email">{labels.email}</label>
+              <input class="contact__input" id="cf-email" name="email" type="email" required autocomplete="email" placeholder={labels.emailPlaceholder} />
+            </div>
+            <div class="contact__field">
+              <label class="contact__label" for="cf-phone">{labels.phone}</label>
+              <input class="contact__input" id="cf-phone" name="phone" type="tel" autocomplete="tel" placeholder={labels.phonePlaceholder} />
+            </div>
+          </div>
+          <div class="contact__field">
+            <label class="contact__label" for="cf-message">{labels.message}</label>
+            <textarea class="contact__textarea" id="cf-message" name="message" rows="5" required placeholder={labels.messagePlaceholder}></textarea>
+          </div>
+          <div class="contact__honeypot" aria-hidden="true">
+            <label for="cf-company-url">Non compilare questo campo.</label>
+            <input type="text" id="cf-company-url" name="company_url" tabindex="-1" autocomplete="off" />
+          </div>
+
+          {gdprConsentLabel && (
+            <label class="contact__consent">
+              <input type="checkbox" name="gdpr_consent" required />
+              <span set:html={
+                privacyHref
+                  ? gdprConsentLabel.replace('{privacy}', `<a href="${privacyHref}" target="_blank" rel="noopener noreferrer">privacy policy</a>`)
+                  : gdprConsentLabel
+              } />
+            </label>
+          )}
+
+          <button class="contact__submit" type="submit">{labels.submit}</button>
+        </form>
+      </div>
+
+      <div class="contact__info-col" data-animate>
+        <div class="contact__office">
+          <h3 class="contact__office-title">{officeTitle}</h3>
+          <address class="contact__address">
+            <p>{site.contact.address}</p>
+            <p>{site.contact.city}, {labels.addressCountry}</p>
+          </address>
+          <div class="contact__details">
+            {site.contact.phone && (
+              <a class="contact__detail-link" href={`tel:${site.contact.phone.replace(/\s/g, '')}`}>
+                <span class="contact__detail-label">{labels.phoneInfo}</span>
+                <span>{site.contact.phone}</span>
+              </a>
+            )}
+            <a class="contact__detail-link" href={`mailto:${site.contact.email}`}>
+              <span class="contact__detail-label">{labels.emailInfo}</span>
+              <span>{site.contact.email}</span>
+            </a>
+            <a
+              class="contact__detail-link"
+              href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${site.contact.address ?? ''}, ${site.contact.city ?? ''}`)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span class="contact__detail-label">{labels.directions}</span>
+              <span>Apri in Maps &rarr;</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact {
+    background: var(--color-bg);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .contact__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-2xl);
+  }
+
+  @media (min-width: 860px) {
+    .contact__grid { grid-template-columns: 1.2fr 0.8fr; }
+  }
+
+  .contact__eyebrow {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-bottom: var(--space-md);
+  }
+
+  .contact__title {
+    font-family: var(--font-display);
+    font-size: var(--text-h1);
+    line-height: 1.0;
+    text-transform: uppercase;
+    color: var(--color-fg);
+    margin-bottom: var(--space-md);
+  }
+
+  .contact__intro {
+    font-family: var(--font-body);
+    font-size: var(--text-lg);
+    color: var(--color-fg);
+    opacity: 0.8;
+    line-height: 1.6;
+    max-width: 52ch;
+    margin-bottom: var(--space-xl);
+  }
+
+  .contact__form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .contact__row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+
+  @media (min-width: 480px) {
+    .contact__row { grid-template-columns: 1fr 1fr; }
+  }
+
+  .contact__field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .contact__label {
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-fg-muted);
+  }
+
+  .contact__input,
+  .contact__textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border-strong);
+    border-radius: 2px;
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: var(--color-fg);
+    outline: none;
+    transition: border-color var(--duration-fast);
+    resize: none;
+  }
+
+  .contact__input::placeholder,
+  .contact__textarea::placeholder {
+    color: var(--color-fg-faint);
+  }
+
+  .contact__input:focus,
+  .contact__textarea:focus {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 12%, transparent);
+  }
+
+  .contact__textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+
+  .contact__honeypot {
+    position: absolute;
+    left: -10000px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  .contact__consent {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    font-size: 0.85rem;
+    color: var(--color-fg-muted);
+    line-height: 1.5;
+    cursor: pointer;
+  }
+  .contact__consent input[type="checkbox"] {
+    margin-top: 0.2rem;
+    flex-shrink: 0;
+    accent-color: var(--color-accent);
+  }
+  .contact__consent a {
+    color: var(--color-accent);
+    text-decoration: underline;
+  }
+
+  .contact__submit {
+    align-self: flex-start;
+    padding: 0.875rem 2.5rem;
+    background: var(--color-accent);
+    color: white;
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background var(--duration-fast);
+  }
+
+  .contact__submit:hover {
+    background: var(--color-accent-hover);
+  }
+
+  /* Info column */
+  .contact__office {
+    margin-bottom: var(--space-xl);
+  }
+
+  .contact__office-title {
+    font-family: var(--font-display);
+    font-size: var(--text-h2);
+    line-height: 1.15;
+    text-transform: uppercase;
+    color: var(--color-fg);
+    margin-bottom: var(--space-md);
+  }
+
+  .contact__address {
+    font-style: normal;
+    font-family: var(--font-body);
+    color: var(--color-fg);
+    opacity: 0.8;
+    line-height: 1.6;
+    margin-bottom: var(--space-lg);
+  }
+
+  .contact__details {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .contact__detail-link {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: var(--space-sm) 0;
+    border-bottom: 1px solid var(--color-border);
+    color: var(--color-fg);
+    text-decoration: none;
+    font-size: var(--text-sm);
+    transition: color var(--duration-fast);
+  }
+
+  .contact__detail-link:hover {
+    color: var(--color-accent);
+  }
+
+  .contact__detail-label {
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-fg-faint);
+  }
+
+  .contact__note {
+    padding: var(--space-md);
+    background: var(--color-accent-light);
+    border-left: 3px solid var(--color-accent);
+    margin-bottom: var(--space-lg);
+  }
+
+  .contact__note p {
+    font-size: var(--text-sm);
+    color: var(--color-accent);
+    line-height: var(--leading-relaxed);
+    font-style: italic;
+  }
+
+  .contact__linkedin {
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-fg-muted);
+    text-decoration: none;
+    border-bottom: 1px solid var(--color-border-strong);
+    padding-bottom: 2px;
+    transition: color var(--duration-fast), border-color var(--duration-fast);
+  }
+
+  .contact__linkedin:hover {
+    color: var(--color-accent);
+    border-color: var(--color-accent);
+  }
+</style>

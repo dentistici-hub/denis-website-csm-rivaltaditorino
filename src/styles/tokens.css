@@ -1,0 +1,87 @@
+:root {
+  /* Layout */
+  --max-width: 1400px;
+  --gutter: clamp(1.5rem, 1rem + 3vw, 4rem);
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-expo: cubic-bezier(0.19, 1, 0.22, 1);
+  --duration-fast: 200ms;
+  --duration-normal: 500ms;
+  --duration-slow: 1000ms;
+
+  /* Spacing scale */
+  --space-xs: clamp(0.25rem, 0.15rem + 0.3vw, 0.5rem);
+  --space-sm: clamp(0.5rem, 0.3rem + 0.5vw, 0.75rem);
+  --space-md: clamp(1rem, 0.7rem + 1vw, 1.5rem);
+  --space-lg: clamp(2rem, 1rem + 3vw, 4rem);
+  --space-xl: clamp(3rem, 1.5rem + 5vw, 7rem);
+  --space-2xl: clamp(5rem, 3rem + 7vw, 12rem);
+  --space-section: clamp(6rem, 4rem + 8vw, 14rem);
+
+  /* Leading */
+  --leading-tight: 1.05;
+  --leading-snug: 1.2;
+  --leading-normal: 1.6;
+  --leading-relaxed: 1.7;
+
+  /* Z-stack */
+  --z-bg: 0;
+  --z-content: 1;
+  --z-overlap: 2;
+  --z-decorative: 5;
+  --z-interactive: 10;
+  --z-header: 100;
+  --z-overlay: 200;
+  --z-preloader: 500;
+
+  /* ------------------------------------------------------------------ */
+  /* Colour system — three colours exactly (concept.md section 5).      */
+  /*                                                                    */
+  /*   bg      #F5F1EA  aged shop-drawing paper                         */
+  /*   fg      #121212  ink                                             */
+  /*   accent  #A8370F  hot-metal forge orange (WCAG AA on cream 5.79)  */
+  /*                                                                    */
+  /* Elevated / muted / faint / border are derived from fg alpha.       */
+  /* No steel-blue secondary — concept rejects a second accent.         */
+  /* ------------------------------------------------------------------ */
+  --color-bg: #F5F1EA;
+  --color-bg-elevated: #FBF7EF;
+  --color-bg-card: #EFE9DE;
+  --color-fg: #121212;
+  --color-fg-muted: rgba(18, 18, 18, 0.72);
+  --color-fg-faint: rgba(18, 18, 18, 0.45);
+  --color-fg-on-dark: #F5F1EA;
+  --color-accent: #A8370F;
+  --color-accent-hover: #8A2D0C;
+  --color-accent-dark: #6E2408;
+  --color-accent-light: rgba(168, 55, 15, 0.08);
+  --color-border: rgba(18, 18, 18, 0.12);
+  --color-border-strong: rgba(18, 18, 18, 0.28);
+
+  /* Typography — Anton display + Inter body (type-system.md) */
+  --font-display: 'Anton', 'Impact', 'Arial Black', sans-serif;
+  --font-body: 'Inter Variable', 'Inter', system-ui, sans-serif;
+
+  /* Fluid scale (1.414 ratio) */
+  --text-display: clamp(4.5rem, 12vw, 10rem);
+  --text-h1: clamp(2.5rem, 5vw, 3.75rem);
+  --text-h2: clamp(1.75rem, 3vw, 2.5rem);
+  --text-h3: clamp(1.25rem, 1.75vw, 1.5rem);
+  --text-lg: clamp(1.1rem, 1.2vw, 1.25rem);
+  --text-body: clamp(1rem, 1.05vw, 1.125rem);
+  --text-sm: clamp(0.875rem, 0.9vw, 0.95rem);
+  --text-xs: 0.7rem;
+
+  /* Legacy aliases — some reference components reach for these names. */
+  --text-base: var(--text-body);
+  --text-xl: var(--text-h3);
+  --text-2xl: var(--text-h2);
+  --text-3xl: var(--text-h1);
+
+  --display-weight: 400;
+  --display-spacing: 0;
+  --display-transform: uppercase;
+  --body-weight: 400;
+}

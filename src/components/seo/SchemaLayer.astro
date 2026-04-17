@@ -1,0 +1,91 @@
+---
+import type { SiteConfig, SchemaConfig, FAQ, Service } from '../../types/content';
+
+interface Props {
+  site: SiteConfig;
+  schema: SchemaConfig;
+  pageTitle: string;
+  pageDescription: string;
+}
+
+const { site, schema, pageTitle, pageDescription } = Astro.props;
+
+const primarySchema: Record<string, unknown> = {
+  '@context': 'https://schema.org',
+  '@type': schema.type,
+  name: site.name,
+  description: site.description,
+  url: site.url,
+  telephone: site.contact.phone,
+  email: site.contact.email,
+};
+
+if (site.contact.address) {
+  primarySchema.address = {
+    '@type': 'PostalAddress',
+    streetAddress: site.contact.address,
+    addressLocality: site.contact.city,
+    addressCountry: site.contact.country,
+  };
+}
+
+if (site.contact.lat && site.contact.lng) {
+  primarySchema.geo = {
+    '@type': 'GeoCoordinates',
+    latitude: site.contact.lat,
+    longitude: site.contact.lng,
+  };
+}
+
+if (schema.aggregateRating) {
+  primarySchema.aggregateRating = {
+    '@type': 'AggregateRating',
+    ratingValue: schema.aggregateRating.ratingValue,
+    reviewCount: schema.aggregateRating.reviewCount,
+  };
+}
+
+const faqSchema = schema.faqs && schema.faqs.length > 0 ? {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: schema.faqs.map((faq: FAQ) => ({
+    '@type': 'Question',
+    name: faq.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: faq.answer,
+    },
+  })),
+} : null;
+
+const serviceSchemas = schema.services ? schema.services.map((service: Service) => ({
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: service.title,
+  description: service.description,
+  provider: {
+    '@type': schema.type,
+    name: site.name,
+  },
+})) : [];
+
+const webPageSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: pageTitle,
+  description: pageDescription,
+  url: Astro.url.href,
+  dateModified: site.lastUpdated,
+  inLanguage: site.language,
+  isPartOf: {
+    '@type': 'WebSite',
+    name: site.name,
+    url: site.url,
+  },
+};
+---
+
+<script is:inline type="application/ld+json" set:html={JSON.stringify(primarySchema)} />
+<script is:inline type="application/ld+json" set:html={JSON.stringify(webPageSchema)} />
+{faqSchema && <script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
+{serviceSchemas.map((s) => <script is:inline type="application/ld+json" set:html={JSON.stringify(s)} />)}

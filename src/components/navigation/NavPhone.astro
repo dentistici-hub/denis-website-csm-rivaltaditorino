@@ -1,0 +1,359 @@
+---
+import type { NavLink } from '../../types/content';
+
+interface Labels {
+  brandHomepage: string;
+  mainNav: string;
+  mobileNav: string;
+  callAria: string;
+  toggleMenu: string;
+}
+
+interface Props {
+  brandName: string;
+  links: NavLink[];
+  phone?: string;
+  ctaLabel?: string;
+  ctaHref?: string;
+  labels?: Partial<Labels>;
+}
+
+const defaultLabels: Labels = {
+  brandHomepage: 'Torna alla homepage',
+  mainNav: 'Navigazione principale',
+  mobileNav: 'Navigazione mobile',
+  callAria: 'Chiama',
+  toggleMenu: 'Apri menu',
+};
+
+const {
+  brandName,
+  links,
+  phone,
+  ctaLabel = 'Chiama ora',
+  ctaHref = '#contact',
+  labels: labelsProp = {},
+} = Astro.props;
+
+const labels: Labels = { ...defaultLabels, ...labelsProp };
+---
+
+<header class="nav" id="nav">
+  <div class="nav__inner container">
+    <a href="/" class="nav__brand" aria-label={`${brandName} — ${labels.brandHomepage}`}>
+      <span class="nav__brand-text">{brandName}</span>
+    </a>
+
+    <nav class="nav__links" aria-label={labels.mainNav}>
+      <ul class="nav__list">
+        {links.map((link) => (
+          <li class="nav__item">
+            <a href={link.href} class="nav__link">{link.label}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="nav__right">
+      {phone && (
+        <a href={`tel:${phone.replace(/\s/g, '')}`} class="nav__phone" aria-label={`${labels.callAria}: ${phone}`}>
+          <svg class="nav__phone-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.07 1.18 2 2 0 012.06 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+          </svg>
+          {phone}
+        </a>
+      )}
+      <a href={ctaHref} class="nav__cta">{ctaLabel}</a>
+
+      <button
+        class="nav__burger"
+        id="nav-toggle"
+        aria-expanded="false"
+        aria-controls="nav-mobile"
+        aria-label={labels.toggleMenu}
+      >
+        <span class="nav__burger-line"></span>
+        <span class="nav__burger-line"></span>
+        <span class="nav__burger-line"></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="nav__mobile" id="nav-mobile" aria-hidden="true">
+    <nav class="nav__mobile-links" aria-label={labels.mobileNav}>
+      <ul class="nav__mobile-list">
+        {links.map((link) => (
+          <li>
+            <a href={link.href} class="nav__mobile-link">{link.label}</a>
+          </li>
+        ))}
+      </ul>
+      {phone && (
+        <a href={`tel:${phone.replace(/\s/g, '')}`} class="nav__mobile-phone">
+          {phone}
+        </a>
+      )}
+      <a href={ctaHref} class="nav__mobile-cta">{ctaLabel}</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: var(--z-header);
+    background: var(--color-bg-elevated);
+    border-bottom: 2px solid var(--color-border);
+    transition: box-shadow 0.3s var(--ease-out);
+  }
+
+  .nav.is-scrolled {
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+  }
+
+  .nav__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+    height: 72px;
+  }
+
+  .nav__brand {
+    flex-shrink: 0;
+    text-decoration: none;
+  }
+
+  .nav__brand-text {
+    font-family: var(--font-display);
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    font-size: var(--text-lg);
+    color: var(--color-fg);
+    line-height: 1;
+  }
+
+  /* Desktop nav */
+  .nav__links {
+    display: none;
+  }
+
+  .nav__list {
+    list-style: none;
+    display: flex;
+    gap: var(--space-lg);
+    padding: 0;
+    margin: 0;
+  }
+
+  .nav__link {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-fg);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    text-decoration: none;
+    transition: color 0.2s;
+    padding-block: 4px;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .nav__link:hover {
+    color: var(--color-accent);
+    border-bottom-color: var(--color-accent);
+  }
+
+  .nav__right {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    flex-shrink: 0;
+  }
+
+  .nav__phone {
+    display: none;
+    align-items: center;
+    gap: 6px;
+    font-size: var(--text-sm);
+    font-weight: 700;
+    color: var(--color-fg);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav__phone:hover {
+    color: var(--color-accent);
+  }
+
+  .nav__phone-icon {
+    flex-shrink: 0;
+  }
+
+  .nav__cta {
+    display: none;
+    padding: 10px 20px;
+    background: var(--color-accent);
+    color: white;
+    font-size: var(--text-sm);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+
+  .nav__cta:hover {
+    background: var(--color-accent-dark);
+  }
+
+  /* Burger */
+  .nav__burger {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 26px;
+    height: 18px;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+  }
+
+  .nav__burger-line {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: var(--color-fg);
+    transition: transform 0.3s var(--ease-out), opacity 0.2s;
+  }
+
+  .nav__burger[aria-expanded="true"] .nav__burger-line:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+
+  .nav__burger[aria-expanded="true"] .nav__burger-line:nth-child(2) {
+    opacity: 0;
+  }
+
+  .nav__burger[aria-expanded="true"] .nav__burger-line:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+
+  /* Mobile drawer */
+  .nav__mobile {
+    position: fixed;
+    top: 72px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--color-bg-elevated);
+    z-index: var(--z-overlay);
+    padding: var(--space-xl) var(--gutter);
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-10px);
+    transition: opacity 0.3s var(--ease-out), transform 0.3s var(--ease-out);
+  }
+
+  .nav__mobile[aria-hidden="false"] {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  .nav__mobile-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .nav__mobile-link {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    font-size: var(--text-h2);
+    line-height: 1.1;
+    color: var(--color-fg);
+    text-decoration: none;
+    display: block;
+    transition: color 0.2s;
+  }
+
+  .nav__mobile-link:hover {
+    color: var(--color-accent);
+  }
+
+  .nav__mobile-phone {
+    font-size: var(--text-xl);
+    font-weight: 700;
+    color: var(--color-accent);
+    text-decoration: none;
+    margin-bottom: var(--space-md);
+    display: block;
+  }
+
+  .nav__mobile-cta {
+    display: inline-block;
+    padding: 14px 28px;
+    background: var(--color-accent);
+    color: white;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    font-size: var(--text-base);
+    align-self: flex-start;
+    transition: background 0.2s;
+  }
+
+  .nav__mobile-cta:hover {
+    background: var(--color-accent-dark);
+  }
+
+  @media (min-width: 900px) {
+    .nav__links { display: flex; }
+    .nav__phone { display: flex; }
+    .nav__cta { display: inline-block; }
+    .nav__burger { display: none; }
+    .nav__mobile { display: none; }
+  }
+</style>
+
+<script>
+  const toggle = document.getElementById('nav-toggle');
+  const mobile = document.getElementById('nav-mobile');
+  const nav = document.getElementById('nav');
+
+  if (toggle && mobile) {
+    toggle.addEventListener('click', () => {
+      const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!isOpen));
+      mobile.setAttribute('aria-hidden', String(isOpen));
+      document.body.style.overflow = isOpen ? '' : 'hidden';
+    });
+
+    mobile.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        toggle.setAttribute('aria-expanded', 'false');
+        mobile.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      });
+    });
+  }
+
+  if (nav) {
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('is-scrolled', window.scrollY > 20);
+    }, { passive: true });
+  }
+</script>

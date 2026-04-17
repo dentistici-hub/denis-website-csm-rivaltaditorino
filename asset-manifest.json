@@ -1,0 +1,273 @@
+{
+  "client": "csm-rivaltaditorino",
+  "language": "it",
+  "generated_at": "2026-04-17",
+  "summary": {
+    "total_slots": 23,
+    "sources": {
+      "client-original": 22,
+      "client-placeholder": 1,
+      "unsplash": 0,
+      "pexels": 0,
+      "generated": 0
+    },
+    "needs_generation": 0,
+    "notes": "All portfolio and service slots filled from real client imagery. No stock photos were needed — CSM has a strong body of real infrastructure work (Torino metro, Italian highway toll gantries, prison fit-outs) that far exceeds what Unsplash could provide for a 50+ year metal fabrication workshop. The two dramatic welder shots ('hero' and 'hero-alt') are stock images the client themselves published on csm-rivaltaditorino.it — kept because they ARE the client's established brand imagery. Logo is a generic hammer icon served from the client CDN; flagged low-quality, Denis may want a proper wordmark."
+  },
+  "assets": {
+    "logo": {
+      "path": "/images/logo.png",
+      "source": "https://lirp.cdn-website.com/f6f9e34e/dms3rep/multi/opt/icon-84w.png",
+      "source_type": "client-placeholder",
+      "attribution": null,
+      "alt_text": "Logo C.S.M. SNC di Bertacco F. & C.",
+      "usable_quality": "low",
+      "note": "Generic hammer icon from client site — not a real logo. Consider replacement."
+    },
+    "hero": {
+      "path": "/images/hero.jpg",
+      "path_webp": "/images/hero.webp",
+      "source": "https://lirp.cdn-website.com/f6f9e34e/dms3rep/multi/opt/C.S.M+S.N.C.+DI+BERTACCO+S.%26C.+-RIVALTA+DI+TORINO-005-1920w.jpg",
+      "source_type": "client-original",
+      "attribution": null,
+      "alt_text": "Saldatore al lavoro con scintille e fumo caldo, lavorazione metalli in officina C.S.M.",
+      "usable_quality": "high",
+      "dimensions": "1920x1281",
+      "note": "Signature visual. Dramatic welder in red jacket with sparks — already published on the client site as their primary brand image."
+    },
+    "hero-alt": {
+      "path": "/images/hero-alt.jpg",
+      "path_webp": "/images/hero-alt.webp",
+      "source": "https://lirp.cdn-website.com/f6f9e34e/dms3rep/multi/opt/C.S.M+S.N.C.+DI+BERTACCO+S.%26C.+-RIVALTA+DI+TORINO-003-1920w.jpg",
+      "source_type": "client-original",
+      "attribution": null,
+      "alt_text": "Carpentiere con maschera da saldatore blu durante lavorazione del ferro",
+      "usable_quality": "high",
+      "dimensions": "1920x1280",
+      "note": "Backup hero / atmospheric workshop shot for split-screen or secondary CTA section."
+    },
+    "about-heritage": {
+      "path": "/images/about-heritage.jpg",
+      "path_webp": "/images/about-heritage.webp",
+      "source": "https://lirp.cdn-website.com/f6f9e34e/dms3rep/multi/opt/20180110_163404-1920w.jpg",
+      "source_type": "client-original",
+      "attribution": null,
+      "alt_text": "Pensilina autostradale in acciaio su tangenziale realizzata da C.S.M. -- testimonianza di 50 anni di carpenteria metallica",
+      "usable_quality": "high",
+      "dimensions": "1920x1080",
+      "note": "Scale-of-work shot for the heritage/about section — speaks to 'oltre 50 anni di esperienza'."
+    },
+    "service-cancelli-ringhiere": {
+      "path": "/images/service-cancelli-ringhiere.jpg",
+      "path_webp": "/images/service-cancelli-ringhiere.webp",
+      "source": "https://lirp.cdn-website.com/f6f9e34e/dms3rep/multi/opt/C.S.M+S.N.C.+DI+BERTACCO+S.%26C.+-RIVALTA+DI+TORINO-002-1920w.jpg",
+      "source_type": "client-original",
+      "attribution": null,
+      "alt_text": "Recinzione in ferro battuto nero su giardino residenziale, produzione C.S.M.",
+      "usable_quality": "high",
+      "dimensions": "1920x1280"
+    },
+    "service-saldatura": {
+      "path": "/images/service-saldatura.jpg",
+      "path_webp": "/images/service-saldatura.webp",
+      "source": "client CDN (same as hero)",
+      "source_type": "client-original",
+      "attribution": null,
+      "alt_text": "Saldatura di precisione con scintille su pezzo in ferro, officina C.S.M. Rivalta di Torino",
+      "usable_quality": "high",
+      "dimensions": "1920x1281"
+    },
+    "service-carpenteria": {
+      "path": "/images/service-carpenteria.jpg",
+      "path_webp": "/images/service-carpenteria.webp",
+      "source": "https://lirp.cdn-website.com/f6f9e34e/dms3rep/multi/opt/20150129_115200-1920w.jpg",
+      "source_type": "client-original",
+      "attribution": null,
+      "alt_text": "Carpenteria leggera: struttura metallica industriale in fase di montaggio su cantiere",
+      "usable_quality": "high",
+      "dimensions": "1920x1080"
+    },
+    "service-montaggio": {
+      "path": "/images/service-montaggio.jpg",
+      "path_webp": "/images/service-montaggio.webp",
+      "source": "https://lirp.cdn-website.com/f6f9e34e/dms3rep/multi/opt/20180110_163404-1920w.jpg",
+      "source_type": "client-original",
+      "attribution": null,
+      "alt_text": "Montaggio di pensilina autostradale in acciaio con autocarro gru, lavoro in quota C.S.M.",
+      "usable_quality": "high",
+      "dimensions": "1920x1080"
+    },
+    "service-strutture": {
+      "path": "/images/service-strutture.jpg",
+      "path_webp": "/images/service-strutture.webp",
+      "source": "https://lirp.cdn-website.com/f6f9e34e/dms3rep/multi/opt/P3240337-1920w.JPG",
+      "source_type": "client-original",
+      "attribution": null,
+      "alt_text": "Camminamento industriale sopraelevato in acciaio e vetro con vista sulle montagne",
+      "usable_quality": "high",
+      "dimensions": "1920x1440"
+    },
+    "service-carcerario": {
+      "path": "/images/service-carcerario.jpg",
+      "path_webp": "/images/service-carcerario.webp",
+      "source": "https://lirp.cdn-website.com/f6f9e34e/dms3rep/multi/opt/P5050405-1920w.JPG",
+      "source_type": "client-original",
+      "attribution": null,
+      "alt_text": "Corridoio carcerario con porte blindate e inferriate antitaglio certificate installate da C.S.M.",
+      "usable_quality": "high",
+      "dimensions": "1920x1440"
+    },
+    "service-ferro-inox": {
+      "path": "/images/service-ferro-inox.jpg",
+      "path_webp": "/images/service-ferro-inox.webp",
+      "source": "https://lirp.cdn-website.com/f6f9e34e/dms3rep/multi/opt/P7240131-1920w.JPG",
+      "source_type": "client-original",
+      "attribution": null,
+      "alt_text": "Ascensore in vetro e acciaio inox della metropolitana di Torino (GTT) realizzato da C.S.M.",
+      "usable_quality": "high",
+      "dimensions": "1920x1440"
+    },
+    "service-coperture": {
+      "path": "/images/service-coperture.jpg",
+      "path_webp": "/images/service-coperture.webp",
+      "source": "https://lirp.cdn-website.com/f6f9e34e/dms3rep/multi/opt/20180930_104006-1920w.jpg",
+      "source_type": "client-original",
+      "attribution": null,
+      "alt_text": "Facciata commerciale con copertura in pannelli metallici rossi e grigi, opera C.S.M.",
+      "usable_quality": "high",
+      "dimensions": "1920x1080"
+    },
+    "portfolio-metro-torino": {
+      "path": "/images/portfolio-metro-torino.jpg",
+      "path_webp": "/images/portfolio-metro-torino.webp",
+      "source": "https://lirp.cdn-website.com/f6f9e34e/dms3rep/multi/opt/P7240131-1920w.JPG",
+      "source_type": "client-original",
+      "attribution": null,
+      "alt_text": "Ascensori metropolitana di Torino GTT in vetro e acciaio, realizzati da C.S.M.",
+      "usable_quality": "high",
+      "dimensions": "1920x1440",
+      "project_tag": "Metropolitana di Torino -- GTT"
+    },
+    "portfolio-struttura-industriale": {
+      "path": "/images/portfolio-struttura-industriale.jpg",
+      "path_webp": "/images/portfolio-struttura-industriale.webp",
+      "source": "https://lirp.cdn-website.com/f6f9e34e/dms3rep/multi/opt/20150129_115200-1920w.jpg",
+      "source_type": "client-original",
+      "attribution": null,
+      "alt_text": "Struttura metallica industriale in fase di assemblaggio su plinti di cemento armato",
+      "usable_quality": "high",
+      "dimensions": "1920x1080",
+      "project_tag": "Capannone industriale"
+    },
+    "portfolio-facciata-commerciale": {
+      "path": "/images/portfolio-facciata-commerciale.jpg",
+      "path_webp": "/images/portfolio-facciata-commerciale.webp",
+      "source": "https://lirp.cdn-website.com/f6f9e34e/dms3rep/multi/opt/20180930_104006-1920w.jpg",
+      "source_type": "client-original",
+      "attribution": null,
+      "alt_text": "Facciata di edificio commerciale con elemento verticale in acciaio rosso e pannellature",
+      "usable_quality": "high",
+      "dimensions": "1920x1080",
+      "project_tag": "Facciata commerciale"
+    },
+    "portfolio-metro-tunnel": {
+      "path": "/images/portfolio-metro-tunnel.jpg",
+      "path_webp": "/images/portfolio-metro-tunnel.webp",
+      "source": "https://lirp.cdn-website.com/f6f9e34e/dms3rep/multi/opt/20170825_132521-1920w.jpg",
+      "source_type": "client-original",
+      "attribution": null,
+      "alt_text": "Galleria metropolitana con staffe e supporti metallici su pareti in cemento, fornitura C.S.M.",
+      "usable_quality": "high",
+      "dimensions": "1920x1080",
+      "project_tag": "Galleria metro -- supporti"
+    },
+    "portfolio-pensilina-autostradale": {
+      "path": "/images/portfolio-pensilina-autostradale.jpg",
+      "path_webp": "/images/portfolio-pensilina-autostradale.webp",
+      "source": "https://lirp.cdn-website.com/f6f9e34e/dms3rep/multi/opt/20180110_163404-1920w.jpg",
+      "source_type": "client-original",
+      "attribution": null,
+      "alt_text": "Pensilina autostradale a traliccio in acciaio in fase di installazione con autocarro gru",
+      "usable_quality": "high",
+      "dimensions": "1920x1080",
+      "project_tag": "Pensilina autostradale"
+    },
+    "portfolio-casello-autostradale": {
+      "path": "/images/portfolio-casello-autostradale.jpg",
+      "path_webp": "/images/portfolio-casello-autostradale.webp",
+      "source": "https://lirp.cdn-website.com/f6f9e34e/dms3rep/multi/opt/20170930_152614-1920w.jpg",
+      "source_type": "client-original",
+      "attribution": null,
+      "alt_text": "Casello autostradale con pensilina in acciaio, segnaletica e barriere new jersey",
+      "usable_quality": "high",
+      "dimensions": "1920x1080",
+      "project_tag": "Casello autostradale"
+    },
+    "portfolio-casello-telepass": {
+      "path": "/images/portfolio-casello-telepass.jpg",
+      "path_webp": "/images/portfolio-casello-telepass.webp",
+      "source": "https://lirp.cdn-website.com/f6f9e34e/dms3rep/multi/opt/20170929_142233-1920w.jpg",
+      "source_type": "client-original",
+      "attribution": null,
+      "alt_text": "Casello autostradale Telepass con copertura in acciaio, semafori e corsie dedicate",
+      "usable_quality": "high",
+      "dimensions": "1920x1080",
+      "project_tag": "Casello Telepass"
+    },
+    "portfolio-corridoio-carcere": {
+      "path": "/images/portfolio-corridoio-carcere.jpg",
+      "path_webp": "/images/portfolio-corridoio-carcere.webp",
+      "source": "https://lirp.cdn-website.com/f6f9e34e/dms3rep/multi/opt/P5050405-1920w.JPG",
+      "source_type": "client-original",
+      "attribution": null,
+      "alt_text": "Corridoio di istituto penitenziario con porte blindate e inferriate antitaglio",
+      "usable_quality": "high",
+      "dimensions": "1920x1440",
+      "project_tag": "Istituto penitenziario -- infissi"
+    },
+    "portfolio-camminamento-industriale": {
+      "path": "/images/portfolio-camminamento-industriale.jpg",
+      "path_webp": "/images/portfolio-camminamento-industriale.webp",
+      "source": "https://lirp.cdn-website.com/f6f9e34e/dms3rep/multi/opt/P3240337-1920w.JPG",
+      "source_type": "client-original",
+      "attribution": null,
+      "alt_text": "Camminamento industriale sopraelevato con parapetti e vetrate, vista alpina",
+      "usable_quality": "high",
+      "dimensions": "1920x1440",
+      "project_tag": "Camminamento industriale"
+    },
+    "portfolio-porte-carcere": {
+      "path": "/images/portfolio-porte-carcere.jpg",
+      "path_webp": "/images/portfolio-porte-carcere.webp",
+      "source": "https://lirp.cdn-website.com/f6f9e34e/dms3rep/multi/opt/P3240360-1920w.JPG",
+      "source_type": "client-original",
+      "attribution": null,
+      "alt_text": "Porte monoblocco e cancelli barricata per carcere con inferriate in acciaio",
+      "usable_quality": "high",
+      "dimensions": "1920x1440",
+      "project_tag": "Porte carcerarie"
+    },
+    "portfolio-box-agenti": {
+      "path": "/images/portfolio-box-agenti.jpg",
+      "path_webp": "/images/portfolio-box-agenti.webp",
+      "source": "https://lirp.cdn-website.com/f6f9e34e/dms3rep/multi/opt/P5050402-1920w.JPG",
+      "source_type": "client-original",
+      "attribution": null,
+      "alt_text": "Box agenti di polizia penitenziaria con vetrate protettive e porte blindate",
+      "usable_quality": "high",
+      "dimensions": "1920x1440",
+      "project_tag": "Box agenti -- posto di guardia"
+    }
+  },
+  "unused_scraped_assets": [
+    {
+      "file": "strutture-metalliche.jpg",
+      "reason": "Generic stock photo of a blank metal door -- too weak/low-information to use in portfolio or services."
+    }
+  ],
+  "warnings": [
+    "Logo is a generic hammer icon, not a real company mark. Denis may want to commission a wordmark or typeset C.S.M. in a strong serif/sans.",
+    "No team photos exist -- per brief, this is a workshop; frame the 'team' section around craft / machinery / 50+ year heritage instead of headshots.",
+    "hero.jpg and hero-alt.jpg are stock welder photos the client already uses on their own site. Ethically fine (they are the established brand visuals) but builder should not claim them as proprietary."
+  ]
+}

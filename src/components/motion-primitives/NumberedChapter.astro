@@ -1,0 +1,123 @@
+---
+/**
+ * NumberedChapter — oversized numeral + sticky chapter label. Used for
+ * service lists, process steps, or case-study sections where the rhythm
+ * matters more than uniform stacking.
+ *
+ * The number is the visual anchor. Content flows to the right. The numeral
+ * can optionally stick to viewport top while the content scrolls (classic
+ * editorial move).
+ *
+ * Props:
+ *   - index: string — required. The numeral to show (e.g. "01", "02"). Pass
+ *       as string so you control zero-padding.
+ *   - label: string — optional short eyebrow under the number.
+ *   - sticky: boolean — sticks the numeral at top during scroll. Default false.
+ *   - align: 'left' | 'right' — which side the number sits. Default 'left'.
+ *   - numeralSize: CSS length. Default `'clamp(6rem, 14vw, 12rem)'`.
+ *   - id, class passthrough.
+ *
+ * Usage:
+ *   <NumberedChapter index="01" label="Strategy" sticky>
+ *     <h3>Figure out what the business actually needs</h3>
+ *     <p>The part where we ask the questions nobody asked before.</p>
+ *   </NumberedChapter>
+ */
+interface Props {
+  index: string;
+  label?: string;
+  sticky?: boolean;
+  align?: 'left' | 'right';
+  numeralSize?: string;
+  id?: string;
+  class?: string;
+}
+
+const {
+  index,
+  label,
+  sticky = false,
+  align = 'left',
+  numeralSize = 'clamp(6rem, 14vw, 12rem)',
+  id,
+  class: className = '',
+} = Astro.props;
+---
+
+<section
+  class:list={['num-chapter', `num-chapter--${align}`, sticky && 'num-chapter--sticky', className]}
+  style={`--numeral-size: ${numeralSize};`}
+  id={id}
+>
+  <aside class="num-chapter__aside">
+    <span class="num-chapter__numeral" aria-hidden="true">{index}</span>
+    {label && <span class="num-chapter__label">{label}</span>}
+  </aside>
+  <div class="num-chapter__content">
+    <slot />
+  </div>
+</section>
+
+<style>
+  .num-chapter {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: clamp(1.5rem, 4vw, 4rem);
+    padding-block: clamp(3rem, 8vw, 8rem);
+    align-items: start;
+  }
+  .num-chapter--right {
+    grid-template-columns: 1fr auto;
+  }
+  .num-chapter--right .num-chapter__aside {
+    order: 2;
+    text-align: right;
+  }
+  .num-chapter__aside {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    line-height: 0.85;
+  }
+  .num-chapter--right .num-chapter__aside {
+    align-items: flex-end;
+  }
+  .num-chapter--sticky .num-chapter__aside {
+    position: sticky;
+    top: 6vh;
+    align-self: start;
+  }
+  .num-chapter__numeral {
+    display: block;
+    font-family: var(--font-display, 'Fraunces', serif);
+    font-size: var(--numeral-size, clamp(6rem, 14vw, 12rem));
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: var(--color-accent, currentColor);
+    letter-spacing: -0.02em;
+  }
+  .num-chapter__label {
+    margin-top: 0.75rem;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--color-fg-faint, currentColor);
+    opacity: 0.8;
+  }
+  .num-chapter__content > :first-child {
+    margin-top: 0;
+  }
+  @media (max-width: 700px) {
+    .num-chapter {
+      grid-template-columns: 1fr;
+    }
+    .num-chapter--right .num-chapter__aside {
+      order: 0;
+      text-align: left;
+      align-items: flex-start;
+    }
+    .num-chapter--sticky .num-chapter__aside {
+      position: static;
+    }
+  }
+</style>

@@ -1,0 +1,188 @@
+{
+  "company": {
+    "name": "C.S.M. SNC di Bertacco F. & C.",
+    "slug": "csm-rivaltaditorino",
+    "tagline": "Professionisti nella lavorazione dei metalli",
+    "industry": "construction",
+    "industry_confidence": 0.98,
+    "language": "it",
+    "founding_year": null,
+    "location": {
+      "address": "Via Orbassano 48, 10040 Rivalta di Torino (TO)",
+      "city": "Rivalta di Torino",
+      "country": "Italy",
+      "lat": null,
+      "lng": null
+    },
+    "contact": {
+      "phone": "+39 011 9002640",
+      "email": "csm.bertacco@libero.it",
+      "whatsapp": null,
+      "social": {
+        "linkedin": null,
+        "facebook": null,
+        "instagram": null
+      }
+    }
+  },
+  "content": {
+    "services": [
+      {
+        "name": "Produzione di cancelli e ringhiere",
+        "description": "Produzione di cancelli, recinzioni, parapetti per balconi, scale, strutture metalliche, pensiline, inferriate di sicurezza civili e opere di tipo carcerario.",
+        "confidence": 1.0
+      },
+      {
+        "name": "Lavori di saldatura metalli",
+        "description": "Saldatura e fabbricazione su misura, dai più comuni lavori di fabbro ai montaggi meccanici di impianti.",
+        "confidence": 1.0
+      },
+      {
+        "name": "Carpenteria leggera",
+        "description": "Fabbricazione su misura di carpenteria leggera e medio-pesante in ferro e acciaio inox.",
+        "confidence": 1.0
+      },
+      {
+        "name": "Montaggio componenti meccanici",
+        "description": "Progettazione, realizzazione e montaggio di componenti meccanici e impianti.",
+        "confidence": 1.0
+      },
+      {
+        "name": "Strutture metalliche",
+        "description": "Strutture metalliche su misura per esigenze civili e industriali, incluse strutture in acciaio per cantieri e pensiline.",
+        "confidence": 1.0
+      },
+      {
+        "name": "Infissi di tipo carcerario",
+        "description": "Inferriate antitaglio certificate, finestre per celle, porte monoblocco, spioncini, porte per bagni, cancelli barricata automatizzati/manuali, box agenti, divisori colloqui, posti di guardia, vetrate protettive, muri di cinta e recinzioni esterne.",
+        "confidence": 1.0
+      },
+      {
+        "name": "Lavorazione ferro e acciaio inox",
+        "description": "Lavorazione di accessori in ferro, profilati metallici e finiture in acciaio inox con attrezzature moderne.",
+        "confidence": 1.0
+      },
+      {
+        "name": "Coperture e pensiline",
+        "description": "Coperture metalliche, tettoie e pensiline su misura per uso residenziale e commerciale.",
+        "confidence": 1.0
+      }
+    ],
+    "team": [],
+    "testimonials": [],
+    "about": "C.S.M. SNC di Bertacco F. & C. è una carpenteria metallica attiva da oltre 50 anni a Rivalta di Torino, specializzata nella lavorazione del ferro e dell'acciaio inox. L'azienda è punto di riferimento nel campo della lavorazione dei metalli, offrendo accessori in ferro, cancelli, ringhiere, strutture metalliche, pensiline, inferriate di sicurezza ed infissi di tipo carcerario. Tutti i lavori rispettano i più alti standard di qualità e resistenza, per sopportare sollecitazioni meccaniche e l'esposizione agli agenti atmosferici. L'officina utilizza attrezzature moderne per la profilatura dei metalli e la lavorazione dell'acciaio, servendo privati, aziende e enti pubblici con oltre 60 anni di esperienza. P.I. 04896520017.",
+    "meta_description": "Lavorazione del ferro | Rivalta di Torino, TO | C.S.M."
+  },
+  "assets": {
+    "logo": "https://lirp.cdn-website.com/f6f9e34e/dms3rep/multi/opt/icon-84w.png",
+    "images": [
+      {
+        "url": "https://lirp.cdn-website.com/f6f9e34e/dms3rep/multi/opt/C.S.M+S.N.C.+DI+BERTACCO+S.%26C.+-RIVALTA+DI+TORINO-002-1104w.jpg",
+        "local_path": "scraped-assets/ringhiera-ferro.jpg",
+        "alt": "ringhiera in ferro",
+        "width": 1104,
+        "usable": true
+      },
+      {
+        "url": "https://lirp.cdn-website.com/f6f9e34e/dms3rep/multi/opt/C.S.M+S.N.C.+DI+BERTACCO+S.%26C.+-RIVALTA+DI+TORINO-003-1104w.jpg",
+        "local_path": "scraped-assets/carpentiere.jpg",
+        "alt": "carpentiere",
+        "width": 1104,
+        "usable": true
+      },
+      {
+        "url": "https://lirp.cdn-website.com/f6f9e34e/dms3rep/multi/opt/C.S.M+S.N.C.+DI+BERTACCO+S.%26C.+-RIVALTA+DI+TORINO-005-1104w.jpg",
+        "local_path": "scraped-assets/lavorazione-ferro.jpg",
+        "alt": "lavorazione del ferro",
+        "width": 1104,
+        "usable": true
+      },
+      {
+        "url": "https://lirp.cdn-website.com/f6f9e34e/dms3rep/multi/opt/C.S.M+S.N.C.+DI+BERTACCO+S.%26C.+-RIVALTA+DI+TORINO-006-1104w.jpg",
+        "local_path": "scraped-assets/strutture-metalliche.jpg",
+        "alt": "strutture metalliche",
+        "width": 1104,
+        "usable": true
+      },
+      {
+        "url": "https://lirp.cdn-website.com/f6f9e34e/dms3rep/multi/opt/P7240131-1104w.JPG",
+        "local_path": "scraped-assets/lavoro-01-p7240131.jpg",
+        "alt": "",
+        "width": 1104,
+        "usable": true
+      },
+      {
+        "url": "https://lirp.cdn-website.com/f6f9e34e/dms3rep/multi/opt/20150129_115200-1104w.jpg",
+        "local_path": "scraped-assets/lavoro-02-20150129.jpg",
+        "alt": "",
+        "width": 1104,
+        "usable": true
+      },
+      {
+        "url": "https://lirp.cdn-website.com/f6f9e34e/dms3rep/multi/opt/20180930_104006-1104w.jpg",
+        "local_path": "scraped-assets/lavoro-03-20180930.jpg",
+        "alt": "",
+        "width": 1104,
+        "usable": true
+      },
+      {
+        "url": "https://lirp.cdn-website.com/f6f9e34e/dms3rep/multi/opt/20170825_132521-1104w.jpg",
+        "local_path": "scraped-assets/lavoro-04-20170825.jpg",
+        "alt": "",
+        "width": 1104,
+        "usable": true
+      },
+      {
+        "url": "https://lirp.cdn-website.com/f6f9e34e/dms3rep/multi/opt/20180110_163404-1104w.jpg",
+        "local_path": "scraped-assets/lavoro-05-20180110.jpg",
+        "alt": "",
+        "width": 1104,
+        "usable": true
+      },
+      {
+        "url": "https://lirp.cdn-website.com/f6f9e34e/dms3rep/multi/opt/20170930_152614-1104w.jpg",
+        "local_path": "scraped-assets/lavoro-06-20170930.jpg",
+        "alt": "",
+        "width": 1104,
+        "usable": true
+      },
+      {
+        "url": "https://lirp.cdn-website.com/f6f9e34e/dms3rep/multi/opt/20170929_142233-1104w.jpg",
+        "local_path": "scraped-assets/lavoro-07-20170929.jpg",
+        "alt": "",
+        "width": 1104,
+        "usable": true
+      },
+      {
+        "url": "https://lirp.cdn-website.com/f6f9e34e/dms3rep/multi/opt/P5050405-1104w.JPG",
+        "local_path": "scraped-assets/lavoro-08-p5050405.jpg",
+        "alt": "",
+        "width": 1104,
+        "usable": true
+      },
+      {
+        "url": "https://lirp.cdn-website.com/f6f9e34e/dms3rep/multi/opt/P3240337-1104w.JPG",
+        "local_path": "scraped-assets/lavoro-09-p3240337.jpg",
+        "alt": "",
+        "width": 1104,
+        "usable": true
+      },
+      {
+        "url": "https://lirp.cdn-website.com/f6f9e34e/dms3rep/multi/opt/P3240360-1104w.JPG",
+        "local_path": "scraped-assets/lavoro-10-p3240360.jpg",
+        "alt": "",
+        "width": 1104,
+        "usable": true
+      },
+      {
+        "url": "https://lirp.cdn-website.com/f6f9e34e/dms3rep/multi/opt/P5050402-1104w.JPG",
+        "local_path": "scraped-assets/lavoro-11-p5050402.jpg",
+        "alt": "",
+        "width": 1104,
+        "usable": true
+      }
+    ]
+  },
+  "source_quality": "good",
+  "source_url": "https://www.csm-rivaltaditorino.it/"
+}

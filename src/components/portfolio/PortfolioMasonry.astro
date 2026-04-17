@@ -1,0 +1,423 @@
+---
+/**
+ * PortfolioMasonry — Pinterest-style masonry grid with lightbox zoom.
+ *
+ * Uses CSS columns (no JS layout) so items naturally flow at any aspect ratio.
+ * Clicking a tile opens a dialog overlay that scales from the tile's position
+ * using the same transform-origin trick as `components/media/MediaLightbox.astro`
+ * (we duplicate the behaviour here instead of importing — `components/` files
+ * are copied into starters individually, so shared code is not reliable).
+ *
+ * Reference inspiration: Awwwards masonry portfolios (e.g. Pinterest-style
+ * layouts) + our existing MediaLightbox zoom origin pattern.
+ */
+import type { CaseStudy } from '../../types/content';
+
+interface Props {
+  cases: CaseStudy[];
+  sectionTitle?: string;
+  eyebrow?: string;
+  /** Column count on large screens. 2 on tablets, 1 on phones (forced via CSS). */
+  columns?: number;
+  /** Accessible label for the lightbox dialog (defaults derived from sectionTitle). */
+  lightboxLabel?: string;
+  /** Close button aria-label. */
+  closeLabel?: string;
+}
+
+const {
+  cases,
+  sectionTitle = 'Selected Work',
+  eyebrow = 'Portfolio',
+  columns = 3,
+  lightboxLabel,
+  closeLabel = 'Close',
+} = Astro.props;
+
+// Prefix asset paths with Astro's base URL so images resolve under GH Pages sub-path deploys.
+const withBase = (p: string | undefined): string | undefined => {
+  if (!p) return p;
+  if (/^(https?:\/\/|data:)/.test(p)) return p;
+  const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+  return p.startsWith('/') ? `${base}${p}` : `${base}/${p}`;
+};
+---
+
+<section class="pmasonry section" aria-labelledby="pmasonry-title">
+  <div class="container">
+    <header class="pmasonry__header" data-animate>
+      {eyebrow && (
+        <div class="pmasonry__eyebrow">
+          <span class="pmasonry__eyebrow-line" aria-hidden="true"></span>
+          <span class="pmasonry__eyebrow-text">{eyebrow}</span>
+        </div>
+      )}
+      <h2 class="pmasonry__title display" id="pmasonry-title">{sectionTitle}</h2>
+    </header>
+
+    <div class="pmasonry__grid" style={`--cols: ${columns};`} data-pmasonry-grid>
+      {cases.map((study, i) => (
+        <button
+          type="button"
+          class="pmasonry__tile"
+          data-pmasonry-tile
+          data-index={i}
+          aria-label={`Open case study: ${study.title}`}
+          style={`--i: ${i};`}
+        >
+          <figure class="pmasonry__fig">
+            {study.image ? (
+              <img
+                class="pmasonry__img"
+                src={withBase(study.image)}
+                alt={study.title}
+                loading="lazy"
+                decoding="async"
+              />
+            ) : (
+              <div class="pmasonry__placeholder" aria-hidden="true">
+                <span>{study.client}</span>
+              </div>
+            )}
+            <figcaption class="pmasonry__cap">
+              <span class="pmasonry__cap-client">{study.client}</span>
+              <span class="pmasonry__cap-title">{study.title}</span>
+            </figcaption>
+          </figure>
+        </button>
+      ))}
+    </div>
+  </div>
+
+  <div
+    class="pmasonry__overlay"
+    data-pmasonry-overlay
+    role="dialog"
+    aria-modal="true"
+    aria-hidden="true"
+    aria-label={lightboxLabel ?? sectionTitle}
+    tabindex="-1"
+  >
+    <div class="pmasonry__stage" data-pmasonry-stage>
+      <img class="pmasonry__full" data-pmasonry-full alt="" />
+      <div class="pmasonry__meta" data-pmasonry-meta>
+        <span class="pmasonry__meta-client" data-pmasonry-meta-client></span>
+        <h3 class="pmasonry__meta-title display" data-pmasonry-meta-title></h3>
+        <p class="pmasonry__meta-desc" data-pmasonry-meta-desc></p>
+      </div>
+    </div>
+    <button
+      type="button"
+      class="pmasonry__close"
+      data-pmasonry-close
+      aria-label={closeLabel}
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true" width="20" height="20">
+        <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" />
+      </svg>
+    </button>
+  </div>
+</section>
+
+<script type="module">
+  type Item = { src: string; client: string; title: string; desc: string };
+
+  document.querySelectorAll('.pmasonry').forEach((root) => {
+    const section = root as HTMLElement;
+    const tiles = Array.from(section.querySelectorAll<HTMLButtonElement>('[data-pmasonry-tile]'));
+    const overlay = section.querySelector<HTMLElement>('[data-pmasonry-overlay]');
+    const stage = section.querySelector<HTMLElement>('[data-pmasonry-stage]');
+    const fullImg = section.querySelector<HTMLImageElement>('[data-pmasonry-full]');
+    const mClient = section.querySelector<HTMLElement>('[data-pmasonry-meta-client]');
+    const mTitle = section.querySelector<HTMLElement>('[data-pmasonry-meta-title]');
+    const mDesc = section.querySelector<HTMLElement>('[data-pmasonry-meta-desc]');
+    const closeBtn = section.querySelector<HTMLButtonElement>('[data-pmasonry-close]');
+    if (!tiles.length || !overlay || !stage || !fullImg) return;
+
+    const items: Item[] = tiles.map((t) => {
+      const img = t.querySelector('img');
+      const client = t.querySelector('.pmasonry__cap-client')?.textContent ?? '';
+      const title = t.querySelector('.pmasonry__cap-title')?.textContent ?? '';
+      return {
+        src: img?.getAttribute('src') ?? '',
+        client,
+        title,
+        desc: t.getAttribute('data-desc') ?? '',
+      };
+    });
+
+    let lastFocus: HTMLElement | null = null;
+
+    const open = (i: number, fromEl: HTMLElement) => {
+      lastFocus = document.activeElement as HTMLElement;
+      const rect = fromEl.getBoundingClientRect();
+      const ox = ((rect.left + rect.width / 2) / window.innerWidth) * 100;
+      const oy = ((rect.top + rect.height / 2) / window.innerHeight) * 100;
+      stage.style.transformOrigin = `${ox}% ${oy}%`;
+
+      const it = items[i];
+      fullImg.src = it.src;
+      fullImg.alt = it.title;
+      if (mClient) mClient.textContent = it.client;
+      if (mTitle) mTitle.textContent = it.title;
+      if (mDesc) mDesc.textContent = it.desc;
+
+      overlay.setAttribute('aria-hidden', 'false');
+      overlay.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+      requestAnimationFrame(() => {
+        stage.classList.add('is-active');
+        overlay.focus();
+      });
+    };
+
+    const close = () => {
+      overlay.classList.remove('is-open');
+      stage.classList.remove('is-active');
+      overlay.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      lastFocus?.focus();
+    };
+
+    tiles.forEach((t, i) => t.addEventListener('click', () => open(i, t)));
+    closeBtn?.addEventListener('click', close);
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
+    document.addEventListener('keydown', (e) => {
+      if (overlay.getAttribute('aria-hidden') === 'true') return;
+      if (e.key === 'Escape') { e.preventDefault(); close(); }
+    });
+  });
+</script>
+
+<style>
+  .pmasonry {
+    background: var(--color-bg);
+    padding-block: var(--space-xl);
+  }
+
+  .pmasonry__header {
+    margin-bottom: var(--space-lg);
+  }
+
+  .pmasonry__eyebrow {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-md);
+  }
+
+  .pmasonry__eyebrow-line {
+    width: 32px;
+    height: 2px;
+    background: var(--color-accent);
+  }
+
+  .pmasonry__eyebrow-text {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--color-accent);
+  }
+
+  .pmasonry__title {
+    font-size: var(--text-3xl);
+    color: var(--color-fg);
+  }
+
+  .pmasonry__grid {
+    column-count: var(--cols, 3);
+    column-gap: var(--space-sm);
+  }
+
+  .pmasonry__tile {
+    appearance: none;
+    border: 1px solid var(--color-border);
+    background: var(--color-bg-elevated);
+    padding: 0;
+    margin: 0 0 var(--space-sm);
+    display: block;
+    width: 100%;
+    cursor: pointer;
+    overflow: hidden;
+    break-inside: avoid;
+    position: relative;
+    transition:
+      transform var(--duration-fast, 180ms) var(--ease-out, ease),
+      border-color var(--duration-fast, 180ms) var(--ease-out, ease);
+  }
+
+  .pmasonry__tile:hover,
+  .pmasonry__tile:focus-visible {
+    transform: translateY(-2px);
+    border-color: var(--color-accent);
+  }
+
+  .pmasonry__tile:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  .pmasonry__fig {
+    margin: 0;
+    position: relative;
+  }
+
+  .pmasonry__img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .pmasonry__placeholder {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    background: var(--color-bg-card);
+    display: flex;
+    align-items: flex-end;
+    padding: var(--space-md);
+    color: var(--color-fg-faint);
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+  }
+
+  .pmasonry__cap {
+    position: absolute;
+    inset: auto 0 0 0;
+    padding: var(--space-md);
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity var(--duration-fast, 180ms) var(--ease-out, ease),
+      transform var(--duration-fast, 180ms) var(--ease-out, ease);
+  }
+
+  .pmasonry__tile:hover .pmasonry__cap,
+  .pmasonry__tile:focus-visible .pmasonry__cap {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .pmasonry__cap-client {
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--color-accent);
+  }
+
+  .pmasonry__cap-title {
+    font-family: var(--font-display);
+    font-size: var(--text-base);
+    font-weight: 700;
+  }
+
+  .pmasonry__overlay {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-overlay, 100);
+    background: rgba(10, 10, 11, 0.96);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--duration-normal, 300ms) var(--ease-out, ease);
+  }
+
+  .pmasonry__overlay.is-open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .pmasonry__stage {
+    width: min(92vw, 1200px);
+    max-height: 88vh;
+    display: grid;
+    gap: var(--space-md);
+    transform: scale(0.05);
+    opacity: 0;
+    transition: transform var(--duration-normal, 300ms) var(--ease-expo, cubic-bezier(0.2, 1, 0.3, 1)),
+      opacity var(--duration-normal, 300ms) var(--ease-out, ease);
+  }
+
+  .pmasonry__stage.is-active {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  .pmasonry__full {
+    max-width: 100%;
+    max-height: 70vh;
+    object-fit: contain;
+    display: block;
+    margin-inline: auto;
+  }
+
+  .pmasonry__meta {
+    color: var(--color-fg, #fff);
+    text-align: center;
+  }
+
+  .pmasonry__meta-client {
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--color-accent);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .pmasonry__meta-title {
+    font-size: var(--text-xl);
+    margin-bottom: 4px;
+  }
+
+  .pmasonry__meta-desc {
+    font-size: var(--text-sm);
+    color: var(--color-fg-muted);
+  }
+
+  .pmasonry__close {
+    position: absolute;
+    top: var(--space-md);
+    right: var(--space-md);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid var(--color-border);
+    background: var(--color-bg-elevated);
+    color: var(--color-fg);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+  }
+
+  .pmasonry__close:hover,
+  .pmasonry__close:focus-visible {
+    background: var(--color-accent);
+    color: var(--color-bg);
+    outline: none;
+  }
+
+  @media (max-width: 900px) {
+    .pmasonry__grid { column-count: 2; }
+  }
+  @media (max-width: 540px) {
+    .pmasonry__grid { column-count: 1; }
+    .pmasonry__close { width: 40px; height: 40px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pmasonry__tile,
+    .pmasonry__cap,
+    .pmasonry__stage {
+      transition: opacity var(--duration-fast, 180ms) linear !important;
+      transform: none !important;
+    }
+    .pmasonry__stage.is-active { transform: none; }
+  }
+</style>

@@ -1,0 +1,122 @@
+{
+  "starter": "construction",
+  "starter_confidence": 0.98,
+  "design": {
+    "palette": {
+      "bg": "#F5F1EA",
+      "fg": "#121212",
+      "accent": "#A8370F",
+      "accent_hover": "#8A2D0C",
+      "accent_dark": "#6E2408",
+      "accent_secondary": "#2C3E4A",
+      "source": "inferred",
+      "contrast_checks": {
+        "fg_on_bg": 16.64,
+        "accent_on_bg": 5.79
+      }
+    },
+    "typography": {
+      "display": {
+        "family": "Anton",
+        "weight": 400,
+        "source_url": "https://api.fontshare.com/v2/fonts/anton"
+      },
+      "body": {
+        "family": "Inter",
+        "weight": 400,
+        "source_url": "https://fontsource.org/fonts/inter"
+      }
+    },
+    "animation_intensity": "medium",
+    "signature_visual": "Full-bleed hero photo of the workshop welder mid-weld (sparks, blue helmet, orange glow) pinned behind an oversized condensed display line 'CINQUANT'ANNI DI FERRO E ACCIAIO'. On scroll, a thin SVG gate-blueprint line-drawing (classic Italian cancello silhouette with vertical bars and a top arch) draws itself across the hero as a second layer using GSAP DrawSVG — tying the real-world forge photo to the engineering discipline behind every commission.",
+    "design_notes": "Craft and trade, not corporate construction. The cheat-sheet default 'Classic orange' family fits the real material (forge heat, welding sparks visible in their own workshop photo), but we darken the accent to #A8370F for WCAG AA and pair it with a warm cream bg — cream beats pure white because it reads as aged paper / shop-drawing stock rather than SaaS. Heritage is the dominant asset (50+ years, family business), so we lead with the welder hero and move heritage narrative up to second position above services. No team/testimonials sections (client has none). Burnished steel-blue secondary #2C3E4A for structural UI accents mirrors the helmet tone in the real photography.",
+    "component_overrides": [
+      { "slot": "nav", "variant": "nav-phone", "reason": "Click-to-call is the primary conversion — local trade, B2B + privati, no booking form on original site." },
+      { "slot": "hero", "variant": "hero-split", "reason": "Left column: oversized display headline + subtitle + phone CTA. Right column: full-height welder photo. Reads as editorial craft rather than marketing stock." },
+      { "slot": "trust", "variant": "trust-heritage", "reason": "'Oltre 50 anni' is the single strongest asset. Dedicated heritage block immediately after hero anchors the credibility." },
+      { "slot": "services", "variant": "services-accordion", "reason": "8 specialized services, several with long descriptions (infissi carcerari has 10+ sub-items). Accordion keeps the density readable without forcing cards to truncate." },
+      { "slot": "portfolio", "variant": "portfolio-masonry", "reason": "11 real job photos of varying aspect ratios from actual commissions (2015-2018). Masonry respects the documentary nature — these are not staged glamour shots." },
+      { "slot": "content", "variant": "content-about", "reason": "Extended about copy with the forge history, P.IVA 04896520017, service to privati/aziende/enti pubblici. Gives the infissi carcerari differentiator room to breathe." },
+      { "slot": "contact", "variant": "contact-split", "reason": "Split between map/address (Via Orbassano 48) and call/email CTAs. Local trade: clients want to know where the officina is before calling." },
+      { "slot": "footer", "variant": "footer-minimal", "reason": "P.IVA, address, phone, email — nothing more. Matches the honest-trade tone; dark footer would feel SaaS-y." }
+    ],
+    "section_order": ["hero", "trust", "services", "portfolio", "content", "contact"]
+  },
+  "enriched_content": {
+    "services": [
+      { "name": "Produzione di cancelli e ringhiere", "description": "Produzione di cancelli, recinzioni, parapetti per balconi, scale, strutture metalliche, pensiline, inferriate di sicurezza civili e opere di tipo carcerario.", "confidence": 1.0 },
+      { "name": "Lavori di saldatura metalli", "description": "Saldatura e fabbricazione su misura, dai più comuni lavori di fabbro ai montaggi meccanici di impianti.", "confidence": 1.0 },
+      { "name": "Carpenteria leggera e medio-pesante", "description": "Fabbricazione su misura di carpenteria leggera e medio-pesante in ferro e acciaio inox.", "confidence": 1.0 },
+      { "name": "Montaggio componenti meccanici", "description": "Progettazione, realizzazione e montaggio di componenti meccanici e impianti.", "confidence": 1.0 },
+      { "name": "Strutture metalliche", "description": "Strutture metalliche su misura per esigenze civili e industriali, incluse strutture in acciaio per cantieri e pensiline.", "confidence": 1.0 },
+      { "name": "Infissi di tipo carcerario", "description": "Inferriate antitaglio certificate, finestre per celle, porte monoblocco, spioncini, porte per bagni, cancelli barricata automatizzati/manuali, box agenti, divisori colloqui, posti di guardia, vetrate protettive, muri di cinta e recinzioni esterne.", "confidence": 1.0 },
+      { "name": "Lavorazione ferro e acciaio inox", "description": "Lavorazione di accessori in ferro, profilati metallici e finiture in acciaio inox con attrezzature moderne.", "confidence": 1.0 },
+      { "name": "Coperture e pensiline", "description": "Coperture metalliche, tettoie e pensiline su misura per uso residenziale e commerciale.", "confidence": 1.0 }
+    ],
+    "team": [],
+    "about": {
+      "text": "C.S.M. SNC di Bertacco F. & C. è una carpenteria metallica attiva da oltre 50 anni a Rivalta di Torino, specializzata nella lavorazione del ferro e dell'acciaio inox. L'azienda è punto di riferimento nel campo della lavorazione dei metalli, offrendo accessori in ferro, cancelli, ringhiere, strutture metalliche, pensiline, inferriate di sicurezza ed infissi di tipo carcerario. Tutti i lavori rispettano i più alti standard di qualità e resistenza, per sopportare sollecitazioni meccaniche e l'esposizione agli agenti atmosferici. L'officina serve privati, aziende ed enti pubblici con oltre 60 anni di esperienza complessiva nel settore.",
+      "confidence": 1.0
+    },
+    "stats": [
+      { "label": "Anni di attività", "value": "50+", "confidence": 1.0 },
+      { "label": "Esperienza nel settore", "value": "60+ anni", "confidence": 1.0 },
+      { "label": "Sede", "value": "Rivalta di Torino", "confidence": 1.0 },
+      { "label": "Materiali", "value": "Ferro e acciaio inox", "confidence": 1.0 }
+    ],
+    "founding_story": {
+      "text": null,
+      "confidence": 0.0
+    },
+    "certifications": [
+      { "name": "Inferriate antitaglio certificate", "body": "Standard sicurezza carceraria", "confidence": 1.0 }
+    ],
+    "faq_pairs": [
+      {
+        "question": "Quale carpenteria metallica a Rivalta di Torino produce cancelli e ringhiere su misura?",
+        "answer": "C.S.M. SNC di Bertacco F. & C., in Via Orbassano 48 a Rivalta di Torino, è una carpenteria metallica attiva da oltre 50 anni e specializzata nella lavorazione del ferro e dell'acciaio inox. L'officina realizza cancelli, ringhiere, parapetti per balconi, scale, pensiline e strutture metalliche interamente su misura, lavorando sia per privati che per aziende ed enti pubblici della provincia di Torino. Per un preventivo è possibile chiamare il +39 011 9002640."
+      },
+      {
+        "question": "Chi produce infissi e inferriate di tipo carcerario in Piemonte?",
+        "answer": "C.S.M. SNC di Bertacco a Rivalta di Torino è specializzata nella produzione di infissi di tipo carcerario: inferriate antitaglio certificate, finestre per celle, porte monoblocco, spioncini, cancelli barricata manuali o automatizzati, box agenti, divisori per colloqui, posti di guardia, vetrate protettive, muri di cinta e recinzioni esterne. L'esperienza sessantennale nel settore della carpenteria metallica e il rispetto degli standard di sicurezza più severi rendono l'officina un fornitore di riferimento per enti pubblici e strutture penitenziarie."
+      },
+      {
+        "question": "Dove trovo una carpenteria metallica storica vicino a Torino per lavori di saldatura e fabbro?",
+        "answer": "C.S.M. SNC di Bertacco opera dal cuore della prima cintura torinese, a Rivalta di Torino, da oltre cinquant'anni. L'officina esegue saldatura, fabbricazione su misura, carpenteria leggera e medio-pesante in ferro e acciaio inox, oltre al montaggio di componenti meccanici e impianti. Serve privati, aziende e enti pubblici nel Torinese con attrezzature moderne per profilatura e lavorazione dell'acciaio. La sede è in Via Orbassano 48, 10040 Rivalta di Torino (TO)."
+      },
+      {
+        "question": "Chi realizza pensiline, coperture metalliche e strutture in acciaio nel Torinese?",
+        "answer": "C.S.M. SNC di Bertacco a Rivalta di Torino realizza pensiline, tettoie e coperture metalliche su misura per uso residenziale, commerciale e industriale, oltre a strutture in acciaio per cantieri. Ogni lavoro è progettato per sopportare sollecitazioni meccaniche e l'esposizione agli agenti atmosferici grazie a trattamenti e procedure specifiche. L'officina dispone di attrezzature moderne per la profilatura dei metalli e la lavorazione dell'acciaio inox. Contatto diretto: +39 011 9002640 o csm.bertacco@libero.it."
+      }
+    ]
+  },
+  "reference_sites": [
+    {
+      "url": "https://www.awwwards.com/sites/model-workshop",
+      "why": "Model-making workshop that treats documentary photography as the whole identity — no stock, no gradients, cream-and-ink restraint.",
+      "borrow": "layout"
+    },
+    {
+      "url": "https://www.awwwards.com/sites/fab-workshop",
+      "why": "Fabrication shop using condensed display type over process photography — the same register we want here.",
+      "borrow": "typography"
+    },
+    {
+      "url": "https://www.impresapizzarotti.it/",
+      "why": "Italian peer in heavy construction — shows how to lead with heritage dates + real project documentation rather than marketing abstraction.",
+      "borrow": "structure"
+    },
+    {
+      "url": "https://www.rizzanidemeccanico.it/",
+      "why": "Italian heritage-first layout; founding-year prominence, no forced stats inflation.",
+      "borrow": "structure"
+    },
+    {
+      "url": "https://centerformetalarts.org/",
+      "why": "Blacksmithing + metal arts school — earthy palette, forge photography, hand-made tone applied to a real-world craft.",
+      "borrow": "palette"
+    }
+  ],
+  "source_quality": "good",
+  "italian_sources_used": ["metallo.info", "myadj.it", "csm-rivaltaditorino.it"]
+}

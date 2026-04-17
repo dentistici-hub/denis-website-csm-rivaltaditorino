@@ -1,0 +1,155 @@
+---
+/**
+ * ClipMaskReveal — reveals content via animated clip-path as the element
+ * enters the viewport. Unlike a fade-up, this hides ALL of the content behind
+ * a geometric mask that wipes away — more deliberate, more cinematic.
+ *
+ * Directions:
+ *   - 'left'   — mask wipes from right to left, content revealed left-first
+ *   - 'right'  — mask wipes from left to right, content revealed right-first
+ *   - 'up'     — mask wipes from bottom to top
+ *   - 'down'   — mask wipes from top to bottom
+ *   - 'circle' — radial reveal from center outward
+ *   - 'iris'   — radial reveal from corner
+ *
+ * Props:
+ *   - direction: one of the above. Default 'up'.
+ *   - duration: seconds for the reveal. Default 1.1.
+ *   - ease: gsap easing string. Default 'power3.out'.
+ *   - delay: seconds. Default 0.
+ *   - start: ScrollTrigger start. Default 'top 80%'.
+ *   - once: only fire once. Default true. Set false for revealing on re-entry.
+ *   - class passthrough.
+ *
+ * Usage:
+ *   <ClipMaskReveal direction="right" duration={1.4}>
+ *     <img src="..." />
+ *   </ClipMaskReveal>
+ */
+type Direction = 'left' | 'right' | 'up' | 'down' | 'circle' | 'iris';
+
+interface Props {
+  direction?: Direction;
+  duration?: number;
+  ease?: string;
+  delay?: number;
+  start?: string;
+  once?: boolean;
+  class?: string;
+}
+
+const {
+  direction = 'up',
+  duration = 1.1,
+  ease = 'power3.out',
+  delay = 0,
+  start = 'top 80%',
+  once = true,
+  class: className = '',
+} = Astro.props;
+
+const config = JSON.stringify({ direction, duration, ease, delay, start, once });
+---
+
+<div class:list={['clip-mask-reveal', className]} data-clip-mask={config} data-direction={direction}>
+  <slot />
+</div>
+
+<style>
+  .clip-mask-reveal {
+    overflow: hidden;
+    display: block;
+  }
+  .clip-mask-reveal[data-direction='up']    { clip-path: inset(100% 0 0 0); }
+  .clip-mask-reveal[data-direction='down']  { clip-path: inset(0 0 100% 0); }
+  .clip-mask-reveal[data-direction='left']  { clip-path: inset(0 0 0 100%); }
+  .clip-mask-reveal[data-direction='right'] { clip-path: inset(0 100% 0 0); }
+  .clip-mask-reveal[data-direction='circle']{ clip-path: circle(0% at 50% 50%); }
+  .clip-mask-reveal[data-direction='iris']  { clip-path: circle(0% at 0% 0%); }
+
+  .clip-mask-reveal.is-revealed {
+    clip-path: inset(0 0 0 0);
+  }
+  .clip-mask-reveal[data-direction='circle'].is-revealed {
+    clip-path: circle(150% at 50% 50%);
+  }
+  .clip-mask-reveal[data-direction='iris'].is-revealed {
+    clip-path: circle(150% at 0% 0%);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .clip-mask-reveal {
+      clip-path: none !important;
+    }
+  }
+</style>
+
+<script>
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  const w = window as unknown as { __mpGsap?: boolean };
+  if (!w.__mpGsap) {
+    gsap.registerPlugin(ScrollTrigger);
+    w.__mpGsap = true;
+  }
+
+  const isReducedMotion = (): boolean =>
+    typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  interface ClipConfig {
+    direction: string;
+    duration: number;
+    ease: string;
+    delay: number;
+    start: string;
+    once: boolean;
+  }
+
+  const CLIP_MAP: Record<string, string> = {
+    up: 'inset(0 0 0 0)',
+    down: 'inset(0 0 0 0)',
+    left: 'inset(0 0 0 0)',
+    right: 'inset(0 0 0 0)',
+    circle: 'circle(150% at 50% 50%)',
+    iris: 'circle(150% at 0% 0%)',
+  };
+
+  function initClipMaskReveal(): void {
+    const els = document.querySelectorAll<HTMLElement>('.clip-mask-reveal[data-clip-mask]');
+    if (els.length === 0) return;
+    if (isReducedMotion()) {
+      els.forEach((el) => { el.style.clipPath = 'none'; });
+      return;
+    }
+
+    els.forEach((el) => {
+      if (el.dataset.clipMaskInitialized === 'true') return;
+      el.dataset.clipMaskInitialized = 'true';
+
+      let cfg: ClipConfig;
+      try { cfg = JSON.parse(el.dataset.clipMask || '{}'); } catch { return; }
+
+      const toClip = CLIP_MAP[cfg.direction] || 'inset(0 0 0 0)';
+
+      gsap.to(el, {
+        clipPath: toClip,
+        duration: cfg.duration,
+        ease: cfg.ease,
+        delay: cfg.delay,
+        scrollTrigger: {
+          trigger: el,
+          start: cfg.start,
+          toggleActions: cfg.once ? 'play none none none' : 'play none none reverse',
+          once: cfg.once,
+        },
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initClipMaskReveal, { once: true });
+  } else {
+    initClipMaskReveal();
+  }
+</script>

@@ -1,0 +1,146 @@
+---
+/**
+ * ScrollPinSection — pins a section while the user scrolls through it, and
+ * drives a `--progress` CSS custom property from 0 to 1 on the pinned element.
+ *
+ * Children read `var(--progress)` to build their own tweens in CSS, or listen
+ * to the `pin-progress` CustomEvent the component dispatches.
+ *
+ * Why this matters: pinning is the single most transformative scroll pattern
+ * on award sites. Instead of sections scrolling past, one section holds and
+ * something *inside it* evolves. It forces hierarchy — not everything is equal.
+ *
+ * Props:
+ *   - distance: string — how long the user scrolls while pinned. CSS length
+ *       (`'100vh'`, `'200vh'`, `'800px'`). Longer = slower internal pacing.
+ *   - start: string — ScrollTrigger start position. Default `'top top'`.
+ *   - scrub: boolean | number — tie progress to scroll (true) with optional
+ *       smoothing in seconds (1.2 = 1.2s lerp). Default: 0.6.
+ *   - anticipatePin: number — pre-pin to avoid jump. Default 1.
+ *   - id: optional id attribute passed to the section.
+ *   - class: additional classes.
+ *
+ * Usage:
+ *   <ScrollPinSection distance="200vh" scrub={1}>
+ *     <div class="scene" style="transform: translateX(calc(var(--progress, 0) * -100%))">
+ *       ...wide content that slides as you scroll...
+ *     </div>
+ *   </ScrollPinSection>
+ */
+interface Props {
+  distance?: string;
+  start?: string;
+  scrub?: boolean | number;
+  anticipatePin?: number;
+  id?: string;
+  class?: string;
+}
+
+const {
+  distance = '150vh',
+  start = 'top top',
+  scrub = 0.6,
+  anticipatePin = 1,
+  id,
+  class: className = '',
+} = Astro.props;
+
+// Deterministic unique id for this instance, used by the client script.
+const instanceId = `pin-${Math.random().toString(36).slice(2, 9)}`;
+---
+
+<section
+  class:list={['pin-section', className]}
+  data-pin-instance={instanceId}
+  data-pin-distance={distance}
+  data-pin-start={start}
+  data-pin-scrub={String(scrub)}
+  data-pin-anticipate={String(anticipatePin)}
+  id={id}
+>
+  <div class="pin-section__inner">
+    <slot />
+  </div>
+</section>
+
+<style>
+  .pin-section {
+    position: relative;
+    width: 100%;
+    overflow: clip;
+  }
+  .pin-section__inner {
+    position: relative;
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: stretch;
+  }
+</style>
+
+<script>
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  const w = window as unknown as { __mpGsap?: boolean };
+  if (!w.__mpGsap) {
+    gsap.registerPlugin(ScrollTrigger);
+    w.__mpGsap = true;
+  }
+
+  const isReducedMotion = (): boolean =>
+    typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function initPinSections(): void {
+    const sections = document.querySelectorAll<HTMLElement>('.pin-section[data-pin-instance]');
+    if (sections.length === 0) return;
+
+    const reduced = isReducedMotion();
+
+    sections.forEach((section) => {
+      // Avoid double-init if the script runs twice (e.g. view transitions).
+      if (section.dataset.pinInitialized === 'true') return;
+      section.dataset.pinInitialized = 'true';
+
+      const inner = section.querySelector<HTMLElement>('.pin-section__inner');
+      if (!inner) return;
+
+      if (reduced) {
+        section.style.setProperty('--progress', '1');
+        return;
+      }
+
+      const distance = section.dataset.pinDistance || '150vh';
+      const start = section.dataset.pinStart || 'top top';
+      const scrubRaw = section.dataset.pinScrub || '0.6';
+      const scrub = scrubRaw === 'true' ? true : scrubRaw === 'false' ? false : parseFloat(scrubRaw);
+      const anticipate = parseFloat(section.dataset.pinAnticipate || '1');
+
+      // Set initial value so children tweening against --progress don't get NaN.
+      section.style.setProperty('--progress', '0');
+
+      ScrollTrigger.create({
+        trigger: section,
+        start,
+        end: `+=${distance}`,
+        pin: inner,
+        pinSpacing: true,
+        scrub,
+        anticipatePin: anticipate,
+        onUpdate: (self) => {
+          const p = self.progress;
+          section.style.setProperty('--progress', p.toFixed(4));
+          section.dispatchEvent(
+            new CustomEvent('pin-progress', { detail: { progress: p }, bubbles: false }),
+          );
+        },
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPinSections, { once: true });
+  } else {
+    initPinSections();
+  }
+</script>

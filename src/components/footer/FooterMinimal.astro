@@ -1,0 +1,27 @@
+---
+import type { SiteConfig } from '../../types/content';
+interface Props { site: SiteConfig; }
+const { site } = Astro.props;
+const year = new Date().getFullYear();
+---
+<footer class="footer" role="contentinfo">
+  <div class="footer__inner container">
+    <p class="footer__brand">&copy; {year} {site.name}</p>
+    <div class="footer__links">
+      {Object.entries(site.social).map(([name, url]) => (
+        <a href={url} class="footer__link" target="_blank" rel="noopener noreferrer">
+          {name.charAt(0).toUpperCase() + name.slice(1)}
+        </a>
+      ))}
+      <a href="/privacy" class="footer__link">Privacy</a>
+    </div>
+  </div>
+</footer>
+<style>
+  .footer { padding-block: var(--space-lg); border-top: 1px solid var(--color-border); }
+  .footer__inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--space-md); }
+  .footer__brand { font-size: var(--text-sm); color: var(--color-fg-muted); }
+  .footer__links { display: flex; gap: var(--space-md); }
+  .footer__link { font-size: var(--text-sm); color: var(--color-fg-muted); transition: color 0.3s; }
+  .footer__link:hover { color: var(--color-fg); }
+</style>

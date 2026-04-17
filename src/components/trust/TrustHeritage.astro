@@ -1,0 +1,221 @@
+---
+/**
+ * TrustHeritage (CSM variant) — animated counter leads the block.
+ *
+ * Drops the "Since {foundingYear}" watermark pattern in favour of a live
+ * counter keyed on `counterValue`. Text strings are Italian.
+ */
+interface Certification {
+  name: string;
+  description?: string;
+}
+
+interface Props {
+  counterValue?: number;
+  counterSuffix?: string;
+  counterLabel?: string;
+  counterDuration?: number;
+  sectionTitle?: string;
+  eyebrow?: string;
+  story?: string;
+  certifications?: Certification[];
+  sectionId?: string;
+}
+
+const {
+  counterValue = 50,
+  counterSuffix = '+',
+  counterLabel = 'Anni di esperienza',
+  counterDuration = 2.4,
+  sectionTitle = 'Un mestiere tramandato, un\u2019officina che dura',
+  eyebrow = 'Il nostro lascito',
+  story,
+  certifications = [],
+  sectionId = 'about',
+} = Astro.props;
+---
+
+<section class="heritage section" id={sectionId} aria-labelledby="heritage-title">
+  <div class="container">
+    <div class="heritage__inner">
+      <!-- Counter column -->
+      <div class="heritage__counter-col" data-animate>
+        <div class="heritage__counter-block">
+          <span class="heritage__counter-eyebrow">Officina storica</span>
+          <span
+            class="heritage__counter stat"
+            data-anim-counter={counterValue}
+            data-anim-counter-suffix={counterSuffix}
+            data-anim-counter-locale="it-IT"
+            data-anim-duration={counterDuration}
+          >0{counterSuffix}</span>
+          <span class="heritage__counter-label">{counterLabel}</span>
+          <div class="heritage__counter-bar"></div>
+        </div>
+      </div>
+
+      <!-- Story column -->
+      <div class="heritage__content">
+        <div class="heritage__eyebrow" data-animate>
+          <span class="heritage__eyebrow-line"></span>
+          <span class="heritage__eyebrow-text">{eyebrow}</span>
+        </div>
+        <h2 class="heritage__title" id="heritage-title" data-animate>{sectionTitle}</h2>
+        {story && <p class="heritage__story" data-animate>{story}</p>}
+
+        {certifications.length > 0 && (
+          <ul class="heritage__credentials" data-animate>
+            {certifications.map((cert) => (
+              <li class="heritage__credential">
+                <span class="heritage__credential-icon" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
+                  </svg>
+                </span>
+                <span>{cert.name}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .heritage {
+    background: var(--color-bg);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .heritage__inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+  }
+
+  .heritage__counter-col {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .heritage__counter-block {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .heritage__counter-eyebrow {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--color-accent);
+    margin-bottom: var(--space-sm);
+  }
+
+  .heritage__counter {
+    display: block;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: clamp(4.5rem, 10vw, 9rem);
+    line-height: 0.95;
+    color: var(--color-fg);
+    letter-spacing: -0.03em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .heritage__counter-label {
+    display: block;
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    letter-spacing: 0.02em;
+    color: var(--color-fg);
+    opacity: 0.75;
+    margin-top: var(--space-sm);
+  }
+
+  .heritage__counter-bar {
+    width: 60px;
+    height: 3px;
+    background: var(--color-accent);
+    margin-top: var(--space-md);
+  }
+
+  .heritage__eyebrow {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-md);
+  }
+
+  .heritage__eyebrow-line {
+    display: block;
+    width: 32px;
+    height: 2px;
+    background: var(--color-accent);
+    flex-shrink: 0;
+  }
+
+  .heritage__eyebrow-text {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--color-accent);
+  }
+
+  .heritage__title {
+    font-family: var(--font-display);
+    font-size: var(--text-h1);
+    line-height: 1.0;
+    text-transform: uppercase;
+    margin-bottom: var(--space-md);
+    max-width: 20ch;
+    color: var(--color-fg);
+  }
+
+  .heritage__story {
+    font-family: var(--font-body);
+    font-size: var(--text-lg);
+    color: var(--color-fg);
+    opacity: 0.8;
+    line-height: 1.6;
+    max-width: 56ch;
+    margin-bottom: var(--space-lg);
+  }
+
+  .heritage__credentials {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .heritage__credential {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-size: var(--text-body);
+    font-weight: 500;
+    color: var(--color-fg);
+  }
+
+  .heritage__credential-icon {
+    display: flex;
+    align-items: center;
+    color: var(--color-accent);
+    flex-shrink: 0;
+  }
+
+  @media (min-width: 900px) {
+    .heritage__inner {
+      grid-template-columns: 320px 1fr;
+      column-gap: var(--space-2xl);
+      align-items: start;
+    }
+  }
+</style>

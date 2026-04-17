@@ -1,0 +1,274 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import NavPhone from '@components/navigation/NavPhone.astro';
+import TrustHeritage from '@components/trust/TrustHeritage.astro';
+import ServicesAccordion from '@components/services/ServicesAccordion.astro';
+import PortfolioMasonry from '@components/portfolio/PortfolioMasonry.astro';
+import ContentAboutProse from '@components/content/ContentAboutProse.astro';
+import ContactSplit from '@components/contact/ContactSplit.astro';
+import FooterMinimal from '@components/footer/FooterMinimal.astro';
+import NumberedChapter from '@components/motion-primitives/NumberedChapter.astro';
+import KenBurnsImage from '@components/motion-primitives/KenBurnsImage.astro';
+import HeroPinnedWelder from '../components/signature/HeroPinnedWelder.astro';
+
+import {
+  site,
+  nav,
+  servicesFabbricazione,
+  servicesInstallazione,
+  servicesManutenzione,
+  caseStudies,
+  schema,
+} from '../data/content';
+
+const description = site.description;
+---
+
+<BaseLayout title="Carpenteria metallica" description={description} site={site} schema={schema}>
+  <NavPhone
+    brandName="C.S.M. Bertacco"
+    links={nav}
+    phone={site.contact.phone}
+    ctaLabel="Chiama ora"
+    ctaHref={`tel:${site.contact.phone?.replace(/\s/g, '')}`}
+  />
+
+  <main>
+    <!-- 1. HERO — pinned signature -->
+    <HeroPinnedWelder
+      headline="Cinquant'anni di ferro e acciaio"
+      subtitle="Carpenteria metallica a Rivalta di Torino. Fabbricazione, installazione e manutenzione su misura."
+      ctaLabel="Chiama ora"
+      ctaHref={`tel:${site.contact.phone?.replace(/\s/g, '')}`}
+      photoSrc="/images/hero.jpg"
+      photoWebp="/images/hero.webp"
+      photoAlt="Saldatore al lavoro con scintille e fumo caldo, lavorazione metalli in officina C.S.M."
+      anchorText="50+"
+      anchorSublabel="Anni di ferro battuto"
+    />
+
+    <!-- 2. TRUST — heritage counter -->
+    <TrustHeritage
+      counterValue={50}
+      counterSuffix="+"
+      counterLabel="Anni di esperienza in officina"
+      counterDuration={2.4}
+      eyebrow="Il nostro lascito"
+      sectionTitle="Un mestiere tramandato, un'officina che dura"
+      story="C.S.M. SNC di Bertacco F. & C. è una carpenteria metallica attiva da oltre cinquant'anni a Rivalta di Torino. Lavoriamo ferro e acciaio inox per privati, aziende ed enti pubblici, con attrezzature moderne e l'attenzione che un mestiere di bottega impone. Ogni pezzo esce dall'officina con standard di qualità e resistenza pensati per sollecitazioni meccaniche e agenti atmosferici."
+      certifications={[
+        { name: 'Inferriate antitaglio certificate per uso carcerario' },
+        { name: 'Lavoriamo per privati, aziende ed enti pubblici' },
+        { name: 'Attrezzature moderne per profilatura e acciaio inox' },
+      ]}
+      sectionId="about"
+    />
+
+    <!-- 3. SERVICES — three NumberedChapter wrappers, sticky numerals -->
+    <section class="services-wrap section" id="services" aria-labelledby="services-heading">
+      <div class="container">
+        <header class="services-wrap__header" data-animate>
+          <p class="services-wrap__eyebrow">Cosa facciamo</p>
+          <h2 class="services-wrap__title" id="services-heading">Dalla materia al cantiere</h2>
+          <p class="services-wrap__intro">Otto lavorazioni specialistiche, organizzate in tre momenti del mestiere: ciò che fabbrichiamo in officina, ciò che posiamo sul campo, ciò che manteniamo nel tempo.</p>
+        </header>
+
+        <NumberedChapter index="01" label="Fabbricazione" sticky align="left" numeralSize="clamp(7rem, 16vw, 14rem)">
+          <ServicesAccordion
+            services={servicesFabbricazione}
+            hideHeader
+            startIndex={0}
+            idPrefix="svc-fab"
+            ctaLabel="Richiedi un preventivo"
+          />
+        </NumberedChapter>
+
+        <NumberedChapter index="02" label="Installazione" sticky align="left" numeralSize="clamp(7rem, 16vw, 14rem)">
+          <ServicesAccordion
+            services={servicesInstallazione}
+            hideHeader
+            startIndex={servicesFabbricazione.length}
+            idPrefix="svc-ins"
+            ctaLabel="Richiedi un preventivo"
+          />
+        </NumberedChapter>
+
+        <NumberedChapter index="03" label="Manutenzione" sticky align="left" numeralSize="clamp(7rem, 16vw, 14rem)">
+          <ServicesAccordion
+            services={servicesManutenzione}
+            hideHeader
+            startIndex={servicesFabbricazione.length + servicesInstallazione.length}
+            idPrefix="svc-man"
+            ctaLabel="Richiedi un preventivo"
+          />
+        </NumberedChapter>
+      </div>
+    </section>
+
+    <!-- 4. PORTFOLIO — ClipMaskReveal wrapping each tile via section-level wrapper -->
+    <section class="portfolio-wrap" id="portfolio">
+      <PortfolioMasonry
+        cases={caseStudies}
+        sectionTitle="Lavori dal cantiere reale"
+        eyebrow="Selezione opere"
+        columns={3}
+        lightboxLabel="Anteprima lavoro"
+        closeLabel="Chiudi"
+      />
+    </section>
+
+    <!-- 5. ATMOSPHERIC BAND — KenBurnsImage hero-alt -->
+    <div class="atmos-band" aria-hidden="false">
+      <KenBurnsImage
+        src="/images/hero-alt.jpg"
+        alt="Carpentiere con maschera da saldatore blu durante la lavorazione del ferro in officina C.S.M."
+        direction="drift"
+        duration={28}
+        intensity={0.4}
+        aspectRatio="21 / 9"
+      />
+    </div>
+
+    <!-- 6. ABOUT PROSE -->
+    <ContentAboutProse
+      eyebrow="L'officina"
+      title="Ferro, acciaio, e cinquant'anni di mani esperte"
+      lead="Siamo una carpenteria metallica di famiglia, attiva da oltre cinquant'anni nel cuore della prima cintura torinese. Produciamo accessori in ferro, cancelli, ringhiere, strutture metalliche, pensiline, inferriate di sicurezza e infissi di tipo carcerario."
+      body="Ogni lavoro rispetta standard di qualità e resistenza pensati per reggere sollecitazioni meccaniche e l'esposizione agli agenti atmosferici. L'officina dispone di attrezzature moderne per la profilatura dei metalli e la lavorazione dell'acciaio inox. Serviamo privati, aziende ed enti pubblici con oltre sessant'anni di esperienza complessiva nel settore."
+      facts={[
+        { label: 'Sede', value: 'Via Orbassano 48, 10040 Rivalta di Torino (TO)' },
+        { label: 'Telefono', value: '+39 011 9002640' },
+        { label: 'Email', value: 'csm.bertacco@libero.it' },
+        { label: 'P. IVA', value: '04896520017' },
+        { label: 'Servizio', value: 'Privati, aziende ed enti pubblici' },
+      ]}
+      sectionId="chi-siamo"
+    />
+
+    <!-- 7. CONTACT -->
+    <ContactSplit
+      site={site}
+      officeTitle="Officina di Rivalta di Torino"
+      eyebrow="Contattaci"
+      title="Parliamo del tuo lavoro"
+      intro="Chiamaci per misure, sopralluoghi o una stima rapida. Rispondiamo al telefono dal lunedì al venerdì, di mattina e pomeriggio."
+    />
+  </main>
+
+  <FooterMinimal site={site} />
+</BaseLayout>
+
+<!--
+  Portfolio tiles get a clip-path up-wipe as they enter the viewport. The
+  motion-primitive ClipMaskReveal wraps a single slot — the masonry component
+  already emits its own <button> tiles, so we apply the same clip behaviour
+  inline here (same duration/direction/once as the plan specifies).
+-->
+
+<script>
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  const w = window as unknown as { __mpGsap?: boolean };
+  if (!w.__mpGsap) {
+    gsap.registerPlugin(ScrollTrigger);
+    w.__mpGsap = true;
+  }
+
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const tiles = document.querySelectorAll<HTMLElement>('#portfolio .pmasonry__tile');
+
+  if (reduced) {
+    tiles.forEach((t) => { t.style.clipPath = 'none'; });
+  } else {
+    tiles.forEach((tile, i) => {
+      tile.style.clipPath = 'inset(100% 0 0 0)';
+      const delay = (i % 3) * 0.08;
+      gsap.to(tile, {
+        clipPath: 'inset(0 0 0 0)',
+        duration: 1.0,
+        ease: 'power3.out',
+        delay,
+        scrollTrigger: {
+          trigger: tile,
+          start: 'top 88%',
+          once: true,
+        },
+      });
+    });
+  }
+</script>
+
+<style is:global>
+  /* Services wrap header */
+  .services-wrap {
+    background: var(--color-bg);
+  }
+  .services-wrap__eyebrow {
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: var(--text-sm);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-bottom: var(--space-sm);
+  }
+  .services-wrap__title {
+    font-family: var(--font-display);
+    font-size: var(--text-h1);
+    line-height: 1.0;
+    text-transform: uppercase;
+    color: var(--color-fg);
+    margin-bottom: var(--space-md);
+    max-width: 20ch;
+  }
+  .services-wrap__intro {
+    font-family: var(--font-body);
+    font-size: var(--text-lg);
+    line-height: 1.6;
+    color: var(--color-fg);
+    opacity: 0.8;
+    max-width: 62ch;
+    margin-bottom: var(--space-xl);
+  }
+  .services-wrap__header {
+    margin-bottom: var(--space-lg);
+  }
+
+  /* Atmospheric band */
+  .atmos-band {
+    width: 100%;
+    margin-block: 0;
+  }
+  .atmos-band > figure {
+    width: 100%;
+  }
+
+  /* Portfolio wrap: override title typography to our display tokens */
+  .portfolio-wrap .pmasonry__title {
+    font-family: var(--font-display);
+    font-size: var(--text-h1);
+    line-height: 1.0;
+    text-transform: uppercase;
+    color: var(--color-fg);
+  }
+  .portfolio-wrap .pmasonry__eyebrow-text {
+    font-family: var(--font-body);
+    font-weight: 500;
+    letter-spacing: 0.18em;
+  }
+
+  /* NumberedChapter numerals — Anton, accent colour, tighter weight */
+  .num-chapter__numeral {
+    font-family: var(--font-display);
+    font-weight: 400 !important;
+    color: var(--color-accent) !important;
+  }
+  .num-chapter__label {
+    font-family: var(--font-body);
+    font-weight: 500;
+    color: var(--color-fg) !important;
+    opacity: 1 !important;
+    letter-spacing: 0.18em !important;
+  }
+</style>

@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /
+
+# Demo mode — noindex active. Remove this file and update when promoted to production.
+# Sitemap: https://dentistici-hub.github.io/denis-website-csm-rivaltaditorino/sitemap-index.xml

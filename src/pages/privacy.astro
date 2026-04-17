@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import NavPhone from '@components/navigation/NavPhone.astro';
+import FooterMinimal from '@components/footer/FooterMinimal.astro';
+import { site, nav, schema } from '../data/content';
+---
+
+<BaseLayout title="Privacy Policy" description={`Informativa privacy per ${site.name}`} site={site} schema={schema}>
+  <NavPhone
+    brandName="C.S.M. Bertacco"
+    links={nav}
+    phone={site.contact.phone}
+    ctaLabel="Chiama ora"
+    ctaHref={`tel:${site.contact.phone?.replace(/\s/g, '')}`}
+  />
+  <main class="container section" style="padding-top: calc(var(--space-2xl) + 72px);">
+    <h1 style="font-family: var(--font-display); font-size: var(--text-h1); line-height: 1; text-transform: uppercase; margin-bottom: var(--space-lg);">Privacy policy</h1>
+    <p style="color: var(--color-fg); opacity: 0.8; max-width: 62ch; line-height: 1.6; margin-bottom: var(--space-md);">
+      Questo sito non utilizza cookie di profilazione, analytics o tracciamento di terze parti.
+      Tutti i font sono ospitati in autonomia. Nessun dato personale viene raccolto o trasmesso
+      a servizi esterni attraverso la semplice consultazione delle pagine.
+    </p>
+    <p style="color: var(--color-fg); opacity: 0.8; max-width: 62ch; line-height: 1.6;">
+      Se ci contatti tramite il modulo, tramite email o telefono, utilizziamo i dati forniti
+      solo per rispondere alla tua richiesta. Per domande sul trattamento dei dati, scrivi a
+      <a href={`mailto:${site.contact.email}`} style="color: var(--color-accent); border-bottom: 1px solid var(--color-accent);">{site.contact.email}</a>.
+    </p>
+  </main>
+  <FooterMinimal site={site} />
+</BaseLayout>

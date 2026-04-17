@@ -1,0 +1,284 @@
+---
+/**
+ * HeroPinnedWelder — the signature move for CSM.
+ *
+ * Shape: HeroSplit-style two-column hero (text left, welder photo right)
+ * nested INSIDE a ScrollPinSection. The `--progress` CSS variable written by
+ * the pin primitive drives:
+ *   - photo scale 1.00 -> 1.06 and brightness 1.0 -> 0.55
+ *   - display headline translateY: arrives from -20vh and settles at 0
+ *   - subtitle: fades in after progress >= 0.35
+ *   - CTA: translates up 10vh across progress 0.5 -> 1.0
+ *
+ * Reduced motion: the ScrollPinSection primitive force-sets --progress=1, so
+ * every child lands at its final state immediately (no animation).
+ *
+ * The numeral mark "50+ ANNI" anchors the composition at the bottom of the
+ * text column. It is static; the counter below the fold (TrustHeritage) is
+ * where the live tick happens.
+ */
+import ScrollPinSection from '../motion-primitives/ScrollPinSection.astro';
+
+interface Props {
+  headline: string;
+  subtitle: string;
+  ctaLabel: string;
+  ctaHref: string;
+  photoSrc: string;
+  photoWebp?: string;
+  photoAlt: string;
+  anchorText?: string;
+  anchorSublabel?: string;
+}
+
+const {
+  headline,
+  subtitle,
+  ctaLabel,
+  ctaHref,
+  photoSrc,
+  photoWebp,
+  photoAlt,
+  anchorText = '50+',
+  anchorSublabel = 'Anni di ferro battuto',
+} = Astro.props;
+
+// Prefix asset paths with Astro's base URL so assets resolve under GH Pages sub-path deploys.
+const withBase = (p: string | undefined): string | undefined => {
+  if (!p) return p;
+  if (/^(https?:\/\/|data:)/.test(p)) return p;
+  const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+  return p.startsWith('/') ? `${base}${p}` : `${base}/${p}`;
+};
+---
+
+<ScrollPinSection
+  distance="120vh"
+  start="top top"
+  scrub={0.8}
+  anticipatePin={1}
+  class="hero-welder"
+  id="hero"
+>
+  <div class="hero-welder__grid">
+    <div class="hero-welder__text">
+      <p class="hero-welder__eyebrow">Carpenteria metallica &middot; Rivalta di Torino</p>
+      <h1 class="hero-welder__headline">{headline}</h1>
+      <p class="hero-welder__subtitle">{subtitle}</p>
+      <div class="hero-welder__actions">
+        <a href={ctaHref} class="hero-welder__cta">{ctaLabel}</a>
+      </div>
+      <div class="hero-welder__anchor" aria-hidden="false">
+        <span class="hero-welder__anchor-num stat">{anchorText}</span>
+        <span class="hero-welder__anchor-label">{anchorSublabel}</span>
+      </div>
+    </div>
+
+    <div class="hero-welder__media">
+      <picture>
+        {photoWebp && <source srcset={withBase(photoWebp)} type="image/webp" />}
+        <img
+          class="hero-welder__photo"
+          src={withBase(photoSrc)}
+          alt={photoAlt}
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+        />
+      </picture>
+      <div class="hero-welder__photo-scrim" aria-hidden="true"></div>
+    </div>
+  </div>
+</ScrollPinSection>
+
+<style>
+  .hero-welder {
+    background: var(--color-bg);
+  }
+
+  .hero-welder :global(.pin-section__inner) {
+    min-height: 100vh;
+    padding-top: calc(72px + var(--space-lg));
+    padding-bottom: var(--space-lg);
+  }
+
+  .hero-welder__grid {
+    position: relative;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    max-width: var(--max-width);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+    gap: var(--space-xl);
+    align-items: stretch;
+  }
+
+  @media (min-width: 960px) {
+    .hero-welder__grid {
+      grid-template-columns: 1.15fr 1fr;
+      gap: clamp(var(--space-lg), 4vw, var(--space-2xl));
+    }
+  }
+
+  .hero-welder__text {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-block: var(--space-xl);
+    min-height: 72vh;
+  }
+
+  .hero-welder__eyebrow {
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: var(--text-sm);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-bottom: var(--space-md);
+  }
+
+  .hero-welder__headline {
+    font-family: var(--font-display);
+    font-size: var(--text-display);
+    line-height: 0.9;
+    text-transform: uppercase;
+    letter-spacing: 0;
+    color: var(--color-fg);
+    max-width: 14ch;
+    margin-bottom: var(--space-md);
+    /* Pin-driven transform */
+    transform: translateY(calc((1 - var(--progress, 0)) * -20vh));
+    opacity: var(--progress, 0);
+    transition: transform 40ms linear, opacity 40ms linear;
+  }
+
+  .hero-welder__subtitle {
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: var(--text-lg);
+    line-height: 1.5;
+    color: var(--color-fg);
+    max-width: 48ch;
+    margin-bottom: var(--space-lg);
+    /* Fade in after progress >= 0.35 */
+    opacity: clamp(0, calc((var(--progress, 0) - 0.35) / 0.3), 1);
+    transition: opacity 60ms linear;
+  }
+
+  .hero-welder__actions {
+    display: flex;
+    gap: var(--space-md);
+    margin-bottom: var(--space-xl);
+    /* CTA translates up 10vh across progress 0.5 -> 1.0 */
+    transform: translateY(calc((1 - clamp(0, (var(--progress, 0) - 0.5) / 0.5, 1)) * 10vh));
+    opacity: clamp(0, calc((var(--progress, 0) - 0.5) / 0.3), 1);
+    transition: transform 60ms linear, opacity 60ms linear;
+  }
+
+  .hero-welder__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6em;
+    padding: 0.95rem 2.2rem;
+    background: var(--color-accent);
+    color: var(--color-bg);
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: var(--text-sm);
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    border: none;
+    transition: background var(--duration-fast);
+  }
+
+  .hero-welder__cta::before {
+    content: '\260E';
+    font-size: 1.1em;
+    line-height: 1;
+  }
+
+  .hero-welder__cta:hover {
+    background: var(--color-accent-hover);
+  }
+
+  .hero-welder__anchor {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    border-top: 2px solid var(--color-fg);
+    padding-top: var(--space-sm);
+    max-width: 18rem;
+  }
+
+  .hero-welder__anchor-num {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+    color: var(--color-fg);
+  }
+
+  .hero-welder__anchor-label {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    color: var(--color-fg);
+    opacity: 0.75;
+    letter-spacing: 0.02em;
+  }
+
+  .hero-welder__media {
+    position: relative;
+    overflow: hidden;
+    min-height: 72vh;
+    background: #111;
+  }
+
+  @media (max-width: 959px) {
+    .hero-welder__media {
+      aspect-ratio: 4 / 5;
+      min-height: auto;
+    }
+  }
+
+  .hero-welder__photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    /* Pin-driven scale + brightness */
+    transform: scale(calc(1 + var(--progress, 0) * 0.06));
+    filter: brightness(calc(1 - var(--progress, 0) * 0.45));
+    will-change: transform, filter;
+    transition: transform 60ms linear, filter 60ms linear;
+  }
+
+  .hero-welder__photo-scrim {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(18, 18, 18, 0) 50%,
+      rgba(18, 18, 18, calc(var(--progress, 0) * 0.35)) 100%
+    );
+    pointer-events: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-welder__headline,
+    .hero-welder__subtitle,
+    .hero-welder__actions,
+    .hero-welder__photo,
+    .hero-welder__photo-scrim {
+      transform: none !important;
+      opacity: 1 !important;
+      filter: none !important;
+    }
+  }
+</style>

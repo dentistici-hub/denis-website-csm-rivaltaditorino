@@ -1,0 +1,245 @@
+---
+import type { Service } from '../../types/content';
+
+interface Props {
+  services: Service[];
+  sectionTitle?: string;
+  eyebrow?: string;
+  /** Intro paragraph under the title. If omitted, the intro is not rendered. */
+  intro?: string;
+  /** CTA label under each expanded panel (Italian). */
+  ctaLabel?: string;
+  /** When true, hide the title/eyebrow header (the component is nested inside a chapter). */
+  hideHeader?: boolean;
+  /** Index offset so 01/02/03... spans multiple grouped accordions on the same page. */
+  startIndex?: number;
+  /** Unique prefix for aria ids. */
+  idPrefix?: string;
+  /** Optional anchor id for the section wrapper. */
+  sectionId?: string;
+}
+
+const {
+  services,
+  sectionTitle = 'Servizi',
+  eyebrow = 'Cosa facciamo',
+  intro,
+  ctaLabel = 'Richiedi un preventivo',
+  hideHeader = false,
+  startIndex = 0,
+  idPrefix = 'service',
+  sectionId,
+} = Astro.props;
+---
+
+<section
+  class="services"
+  class:list={[{ 'services--bare': hideHeader }]}
+  id={sectionId}
+  aria-labelledby={hideHeader ? undefined : `${idPrefix}-title`}
+>
+  <div class:list={[hideHeader ? '' : 'container']}>
+    {!hideHeader && (
+      <div class="services__header" data-animate>
+        <p class="services__eyebrow">{eyebrow}</p>
+        <h2 class="services__title display" id={`${idPrefix}-title`}>{sectionTitle}</h2>
+        {intro && <p class="services__intro">{intro}</p>}
+      </div>
+    )}
+
+    <div class="services__accordion" role="list">
+      {services.map((service, i) => (
+        <div class="services__item" role="listitem" data-animate style={`--index: ${i}`}>
+          <button
+            class="services__trigger"
+            aria-expanded="false"
+            aria-controls={`${idPrefix}-panel-${i}`}
+            id={`${idPrefix}-btn-${i}`}
+          >
+            <span class="services__index">{String(startIndex + i + 1).padStart(2, '0')}</span>
+            <span class="services__name">{service.title}</span>
+            <span class="services__icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <line x1="8" y1="2" x2="8" y2="14" stroke="currentColor" stroke-width="1.5" class="services__icon-v"/>
+                <line x1="2" y1="8" x2="14" y2="8" stroke="currentColor" stroke-width="1.5"/>
+              </svg>
+            </span>
+          </button>
+          <div
+            class="services__panel"
+            id={`${idPrefix}-panel-${i}`}
+            role="region"
+            aria-labelledby={`${idPrefix}-btn-${i}`}
+            hidden
+          >
+            <p class="services__desc">{service.description}</p>
+            <a href="#contact" class="services__cta">{ctaLabel} &rarr;</a>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .services {
+    background: var(--color-bg);
+  }
+  .services--bare {
+    padding: 0;
+  }
+  .services--bare .services__accordion {
+    border-top: 1px solid var(--color-border);
+  }
+  .services__header {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+    margin-bottom: var(--space-xl);
+    max-width: 700px;
+  }
+
+  .services__eyebrow {
+    font-size: var(--text-xs);
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  .services__title {
+    font-size: var(--text-3xl);
+  }
+
+  .services__intro {
+    font-size: var(--text-base);
+    color: var(--color-fg-muted);
+    line-height: var(--leading-relaxed);
+  }
+
+  .services__accordion {
+    border-top: 1px solid var(--color-border-strong);
+  }
+
+  .services__item {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .services__trigger {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 3rem 1fr 2rem;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-lg) 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    transition: color var(--duration-fast);
+  }
+
+  .services__trigger:hover .services__name {
+    color: var(--color-accent);
+  }
+
+  .services__index {
+    font-size: var(--text-xs);
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    color: var(--color-fg-faint);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .services__name {
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: var(--text-h3);
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+    color: var(--color-fg);
+    transition: color var(--duration-fast);
+  }
+
+  .services__icon {
+    color: var(--color-accent);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    transition: transform var(--duration-normal) var(--ease-out);
+  }
+
+  .services__icon-v {
+    transition: transform var(--duration-normal) var(--ease-out);
+    transform-origin: center;
+  }
+
+  .services__trigger[aria-expanded="true"] .services__icon-v {
+    transform: scaleY(0);
+  }
+
+  .services__trigger[aria-expanded="true"] .services__icon {
+    transform: rotate(45deg);
+  }
+
+  .services__panel {
+    padding: 0 0 var(--space-lg) calc(3rem + var(--space-md));
+    display: grid;
+    grid-template-rows: 1fr;
+    overflow: hidden;
+  }
+
+  .services__panel[hidden] {
+    display: none;
+  }
+
+  .services__desc {
+    font-size: var(--text-base);
+    color: var(--color-fg-muted);
+    line-height: var(--leading-relaxed);
+    max-width: 60ch;
+    margin-bottom: var(--space-md);
+  }
+
+  .services__cta {
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-accent);
+    text-decoration: none;
+    border-bottom: 1px solid color-mix(in srgb, var(--color-accent) 30%, transparent);
+    padding-bottom: 2px;
+    display: inline-block;
+    transition: border-color var(--duration-fast);
+  }
+
+  .services__cta:hover {
+    border-color: var(--color-accent);
+  }
+</style>
+
+<script>
+  const items = document.querySelectorAll('.services__item');
+
+  items.forEach((item) => {
+    const trigger = item.querySelector<HTMLButtonElement>('.services__trigger')!;
+    const panel = item.querySelector<HTMLElement>('.services__panel')!;
+
+    trigger.addEventListener('click', () => {
+      const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
+
+      // Close all others
+      items.forEach((other) => {
+        if (other !== item) {
+          const otherTrigger = other.querySelector<HTMLButtonElement>('.services__trigger')!;
+          const otherPanel = other.querySelector<HTMLElement>('.services__panel')!;
+          otherTrigger.setAttribute('aria-expanded', 'false');
+          otherPanel.hidden = true;
+        }
+      });
+
+      // Toggle current
+      trigger.setAttribute('aria-expanded', String(!isExpanded));
+      panel.hidden = isExpanded;
+    });
+  });
+</script>

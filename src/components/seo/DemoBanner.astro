@@ -1,0 +1,38 @@
+---
+interface Props {
+  message?: string;
+  enabled?: boolean;
+}
+
+const {
+  message = 'This is a preview of your new site. Like it? Reply to the email to proceed.',
+  enabled = true,
+} = Astro.props;
+---
+
+{enabled && (
+  <div class="demo-banner" role="status" aria-label="Demo notice">
+    <p class="demo-banner__text">{message}</p>
+  </div>
+)}
+
+<style>
+  .demo-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 9998;
+    padding: var(--space-sm) var(--gutter);
+    background: color-mix(in srgb, var(--color-accent) 90%, transparent);
+    text-align: center;
+    font-size: var(--text-sm);
+    color: var(--color-fg);
+    backdrop-filter: blur(8px);
+  }
+
+  .demo-banner__text {
+    max-width: var(--max-width);
+    margin-inline: auto;
+  }
+</style>

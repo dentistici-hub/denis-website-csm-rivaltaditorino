@@ -1,0 +1,70 @@
+---
+import '@fontsource/anton/400.css';
+import '@fontsource-variable/inter';
+import '../styles/tokens.css';
+import '../styles/global.css';
+import '@components/animations/animations.css';
+import SchemaLayer from '@components/seo/SchemaLayer.astro';
+import OpenGraph from '@components/seo/OpenGraph.astro';
+import DemoBanner from '@components/seo/DemoBanner.astro';
+import type { SiteConfig, SchemaConfig } from '@components/types/content';
+
+interface Props {
+  title: string;
+  description: string;
+  site: SiteConfig;
+  schema: SchemaConfig;
+  isDemo?: boolean;
+  demoMessage?: string;
+}
+
+const {
+  title,
+  description,
+  site,
+  schema,
+  isDemo = true,
+  demoMessage = "Questa \u00E8 un'anteprima del tuo nuovo sito. Ti piace? Rispondi all'email per procedere.",
+} = Astro.props;
+
+const fullTitle = `${title} | ${site.name}`;
+---
+
+<!doctype html>
+<html lang={site.language}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="last-modified" content={site.lastUpdated} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    {isDemo && <meta name="robots" content="noindex, nofollow" />}
+
+    <OpenGraph
+      title={fullTitle}
+      description={description}
+      url={site.url}
+      siteName={site.name}
+      locale="it_IT"
+    />
+
+    <SchemaLayer
+      site={site}
+      schema={schema}
+      pageTitle={fullTitle}
+      pageDescription={description}
+    />
+  </head>
+  <body>
+    <slot />
+    {isDemo && <DemoBanner enabled={isDemo} message={demoMessage} />}
+
+    <script>
+      import { initAnimations } from '@components/animations/animations.ts';
+      initAnimations();
+    </script>
+  </body>
+</html>

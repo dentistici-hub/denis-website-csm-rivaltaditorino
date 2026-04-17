@@ -1,0 +1,212 @@
+Title: Lavorazione del ferro | Rivalta di Torino, TO | C.S.M.
+
+URL Source: https://www.csm-rivaltaditorino.it/
+
+Markdown Content:
+# Lavorazione del ferro | Rivalta di Torino, TO | C.S.M.
+
+![Image 5: logo](blob:http://localhost/4eb6460ab93a7ae1978320dda45af1eb)
+
+[](https://www.cookiebot.com/en/what-is-behind-powered-by-cookiebot/?utm_source=banner_cb&utm_medium=referral&utm_content=v2)
+
+*   [Consent](https://www.csm-rivaltaditorino.it/#)
+*   [Details](https://www.csm-rivaltaditorino.it/#)
+*   [[#IABV2SETTINGS#]](https://www.csm-rivaltaditorino.it/#)
+*   [About](https://www.csm-rivaltaditorino.it/#)
+
+This website uses cookies
+
+This Site uses technical cookies (i.e., necessary cookies) and with your consent also analytical and profiling cookies, which we and third parties will use, respectively, to enable certain key features of the Site, to obtain measurements of the Site's performance, and where applicable, to provide you with promotions in line with your interests, as specified in the cookie policy.
+
+You can freely accept, refuse or customize your consent:
+
+by clicking on 'Accept', you consent to the use of all cookies, including profiling cookies, also from third-party; by clicking on 'Customise', you can confirm your preferences after selecting the purposes you are interested in in the box below, where you can also view the details of each individual cookie category (“Setting” command); by clicking on 'Close and accept necessary cookies only', you will install only the strictly necessary cookies, and consequently reject all other types (including profiling cookies). For more information you can consult the [cookie policy](https://www.csm-rivaltaditorino.it/) at any time.
+
+[#GPC_BANNER_ICON#]
+
+[#GPC_TOAST_TEXT#]
+
+Consent Selection
+
+**Necessary** 
+
+- [x] 
+
+**Functional** 
+
+- [x] 
+
+**Analytical** 
+
+- [x] 
+
+**Profiling** 
+
+- [x] 
+
+[Settings](https://www.csm-rivaltaditorino.it/#)
+
+Details
+
+*   
+Necessary 21- [x]    Necessary cookies help make a website usable by enabling basic functions like page navigation and access to secure areas of the website. The website cannot function properly without these cookies. 
+
+    *   [Amazon 1](https://www.csm-rivaltaditorino.it/#)[Learn more about this provider![Image 6: opens in a new window](blob:http://localhost/7c37f61654102a88a9be209f9569ef78)](https://www.amazon.com/gp/help/customer/display.html/ref=footer_privacy?ie=UTF8&nodeId=468496 "Learn more about this provider Amazon's privacy policy - opens in a new window")**i**Registers the website's speed and performance. This function can be used in context with statistics and load-balancing.**Maximum Storage Duration**: Session**Type**: Pixel Tracker   
+    *   [Cookiebot 1](https://www.csm-rivaltaditorino.it/#)[Learn more about this provider![Image 7: opens in a new window](blob:http://localhost/7c37f61654102a88a9be209f9569ef78)](https://www.cookiebot.com/goto/privacy-policy/ "Learn more about this provider Cookiebot's privacy policy - opens in a new window")**CookieConsent**Stores the user's cookie consent state for the current domain**Maximum Storage Duration**: 1 year**Type**: HTTP Cookie   
+    *   [Google 2](https://www.csm-rivaltaditorino.it/#)[Learn more about this provider![Image 8: opens in a new window](blob:http://localhost/7c37f61654102a88a9be209f9569ef78)](https://business.safety.google/privacy/ "Learn more about this provider Google's privacy policy - opens in a new window")Some of the data collected by this provider is for the purposes of personalization and measuring advertising effectiveness.
+
+**_ga**Used to send data to Google Analytics about the visitor's device and behavior. Tracks the visitor across devices and marketing channels.**Maximum Storage Duration**: 2 years**Type**: HTTP Cookie  **_ga_#**Used to send data to Google Analytics about the visitor's device and behavior. Tracks the visitor across devices and marketing channels.**Maximum Storage Duration**: 2 years**Type**: HTTP Cookie   
+    *   [Italiaonline 7](https://www.csm-rivaltaditorino.it/#)[Learn more about this provider![Image 9: opens in a new window](blob:http://localhost/7c37f61654102a88a9be209f9569ef78)](https://www.italiaonline.it/informativa-privacy/ "Learn more about this provider Italiaonline's privacy policy - opens in a new window")**sbjs_current**Collects data on user behaviour and interaction in order to optimize the website and make advertisement on the website more relevant. **Maximum Storage Duration**: 180 days**Type**: HTTP Cookie  **sbjs_current_add**Collects data on user behaviour and interaction in order to optimize the website and make advertisement on the website more relevant. **Maximum Storage Duration**: 180 days**Type**: HTTP Cookie  **sbjs_first**Collects data on user behaviour and interaction in order to optimize the website and make advertisement on the website more relevant. **Maximum Storage Duration**: 180 days**Type**: HTTP Cookie  **sbjs_first_add**Collects data on user behaviour and interaction in order to optimize the website and make advertisement on the website more relevant. **Maximum Storage Duration**: 180 days**Type**: HTTP Cookie  **sbjs_migrations**Collects data on user behaviour and interaction in order to optimize the website and make advertisement on the website more relevant. **Maximum Storage Duration**: 180 days**Type**: HTTP Cookie  **sbjs_session**Collects data on user behaviour and interaction in order to optimize the website and make advertisement on the website more relevant. **Maximum Storage Duration**: 1 day**Type**: HTTP Cookie  **sbjs_udata**Collects data on user behaviour and interaction in order to optimize the website and make advertisement on the website more relevant. **Maximum Storage Duration**: 180 days**Type**: HTTP Cookie   
+    *   [Pagine Gialle 1](https://www.csm-rivaltaditorino.it/#)[Learn more about this provider![Image 10: opens in a new window](blob:http://localhost/7c37f61654102a88a9be209f9569ef78)](https://www.paginegialle.it/termini-condizioni/dati_personali "Learn more about this provider Pagine Gialle's privacy policy - opens in a new window")**S#_spz-#**Collects data on the user across websites - This data is used to make advertisement more relevant.**Maximum Storage Duration**: Session**Type**: HTML Local Storage   
+    *   [evnt.iol.it 1](https://www.csm-rivaltaditorino.it/#)**evntuid**Collects data on user behaviour and interaction in order to optimize the website and make advertisement on the website more relevant. **Maximum Storage Duration**: Session**Type**: HTTP Cookie   
+    *   [static.cdn-website.com 8](https://www.csm-rivaltaditorino.it/#)**v3**Used by Pinterest to track the usage of services.**Maximum Storage Duration**: Session**Type**: Pixel Tracker  **rc::a**This cookie is used to distinguish between humans and bots. This is beneficial for the website, in order to make valid reports on the use of their website.**Maximum Storage Duration**: Persistent**Type**: HTML Local Storage  **rc::c**This cookie is used to distinguish between humans and bots. **Maximum Storage Duration**: Session**Type**: HTML Local Storage  **dm_last_page_view**This cookie is used to identify the frequency of visits and how long the visitor is on the website.**Maximum Storage Duration**: 1 year**Type**: HTTP Cookie  **dm_last_visit**This cookie is used to identify the frequency of visits and how long the visitor is on the website.**Maximum Storage Duration**: 1 year**Type**: HTTP Cookie  **dm_this_page_view**This cookie is used to determine when the visitor last entered the different subpages on the website.**Maximum Storage Duration**: 1 year**Type**: HTTP Cookie  **dm_timezone_offset**This cookie is used to determine when the visitor last entered the different subpages on the website.**Maximum Storage Duration**: 16 days**Type**: HTTP Cookie  **dm_total_visits**This cookie is used to identify the frequency of visits and how long the visitor is on the website.**Maximum Storage Duration**: 1 year**Type**: HTTP Cookie   
+
+*   Functional 0- [x]    Preference cookies enable a website to remember information that changes the way the website behaves or looks, like your preferred language or the region that you are in.     
+We do not use cookies of this type.   
+*   
+Analytical 3- [x]    Statistic cookies help website owners to understand how visitors interact with websites by collecting and reporting information anonymously. 
+
+    *   [Amazon 3](https://www.csm-rivaltaditorino.it/#)[Learn more about this provider![Image 11: opens in a new window](blob:http://localhost/7c37f61654102a88a9be209f9569ef78)](https://www.amazon.com/gp/help/customer/display.html/ref=footer_privacy?ie=UTF8&nodeId=468496 "Learn more about this provider Amazon's privacy policy - opens in a new window")**snowplowOutQueue_snowplow_cf**Registers statistical data on users' behaviour on the website. Used for internal analytics by the website operator. **Maximum Storage Duration**: Persistent**Type**: HTML Local Storage  **_sp_id.#**Collects data on the user's visits to the website, such as the number of visits, average time spent on the website and what pages have been loaded with the purpose of generating reports for optimising the website content.**Maximum Storage Duration**: 2 years**Type**: HTTP Cookie  **_sp_ses.#**Used by Snowplow Analytics to track how users are browsing and engaging with a website.**Maximum Storage Duration**: 1 day**Type**: HTTP Cookie   
+
+*   Profiling 0- [x]    Marketing cookies are used to track visitors across websites. The intention is to display ads that are relevant and engaging for the individual user and thereby more valuable for publishers and third party advertisers.     
+We do not use cookies of this type.   
+*   Unclassified 0 Unclassified cookies are cookies that we are in the process of classifying, together with the providers of individual cookies.      
+We do not use cookies of this type.  
+
+[Cross-domain consent[#BULK_CONSENT_DOMAINS_COUNT#]](https://www.csm-rivaltaditorino.it/#)
+
+[#BULK_CONSENT_TITLE#]
+
+List of domains your consent applies to: [#BULK_CONSENT_DOMAINS#]
+
+Cookie declaration last updated on 4/14/26 by [Cookiebot](https://www.cookiebot.com/ "Cookiebot")
+
+[#IABV2_TITLE#]
+
+[#IABV2_BODY_INTRO#]
+
+[#IABV2_BODY_LEGITIMATE_INTEREST_INTRO#]
+
+[#IABV2_BODY_PREFERENCE_INTRO#]
+
+[#IABV2_LABEL_PURPOSES#]
+
+[#IABV2_BODY_PURPOSES_INTRO#]
+
+[#IABV2_BODY_PURPOSES#]
+
+[#IABV2_LABEL_FEATURES#]
+
+[#IABV2_BODY_FEATURES_INTRO#]
+
+[#IABV2_BODY_FEATURES#]
+
+[#IABV2_LABEL_PARTNERS#]
+
+[#IABV2_BODY_PARTNERS_INTRO#]
+
+[#IABV2_BODY_PARTNERS#]
+
+About
+
+Cookies are small text files that can be used by websites to make a user's experience more efficient.
+
+The law states that we can store cookies on your device if they are strictly necessary for the operation of this site. For all other types of cookies we need your permission.
+
+This site uses different types of cookies. Some cookies are placed by third party services that appear on our pages.
+
+You can at any time change or withdraw your consent from the Cookie Declaration on our website.
+
+Learn more about who we are, how you can contact us and how we process personal data in our Privacy Policy.
+
+Please state your consent ID and date when you contact us regarding your consent.
+
+- [x] 
+
+**Do not sell or share my personal information** 
+
+Accept Customize Accept selected Close and accept necessary only
+
+**_C.S.M. SNC DI BERTACCO F. & C._**
+
+[Chiama ora+39 011 9002640](https://www.csm-rivaltaditorino.it/)
+*   [Home](https://www.csm-rivaltaditorino.it/)
+*   [Chi siamo](https://www.csm-rivaltaditorino.it/chi-siamo)
+*   [I nostri servizi](https://www.csm-rivaltaditorino.it/i-nostri-servizi)
+*   [Contatti](https://www.csm-rivaltaditorino.it/contatti)
+
+* * *
+
+* * *
+
+**Professionisti nella lavorazione dei metalli**
+
+La carpenteria C.S.M. Snc, con sede a Rivalta di Torino, è da anni un punto di riferimento nel campo della lavorazione dei metalli, dal ferro all'acciaio inox.
+
+[Telefona+39 011 9002640](https://www.csm-rivaltaditorino.it/)
+
+[![Image 12: Icona C.S.M.](https://lirp.cdn-website.com/f6f9e34e/dms3rep/multi/opt/icon-84w.png)](https://www.csm-rivaltaditorino.it/)
+
+# Una carpenteria metallica a Rivalta di Torino
+
+Sita a Rivalta di Torino, a pochi chilometri dal capoluogo piemontese, la carpenteria metallica C.S.M. esegue lavorazioni di vario genere fornendo a privati, imprese ed enti manufatti di altissima qualità, personalizzati in ogni dettaglio.
+
+La ditta è specializzata, in particolare, nella lavorazione del ferro e dell'acciaio inox, con lavorazioni su misura che vengono incontro alle più svariate esigenze dei committenti.
+
+Che si tratti di accessori in ferro, cancelli, ringhiere, strutture metalliche, pensiline, inferriate di sicurezza ed infissi di tipo carcerario: lo staff in sede ha sempre la soluzione giusta per ogni necessità!
+
+*   ![Image 13: ringhiera in ferro](https://lirp.cdn-website.com/f6f9e34e/dms3rep/multi/opt/C.S.M+S.N.C.+DI+BERTACCO+S.%26C.+-RIVALTA+DI+TORINO-002-1104w.jpg) ### Slide title
+
+Write your caption here  Button  
+
+## Produzione di cancelli e ringhiere
+
+C.S.M. produce, all'interno del proprio stabilimento di Rivalta di Torino, diverse tipologie di manufatti in ferro e in acciaio inox, rispondendo alle diverse necessità dei committenti con estrema flessibilità e precisione.
+
+Tra i prodotti realizzati dalla carpenteria metallica torinese è possibile trovare cancelli, recinzioni, parapetti balconi e scale, strutture metalliche, pensiline, inferriate di sicurezza di tipo civile ed opere di tipo carcerario.
+
+## Lavori di saldatura metalli
+
+Oltre alla produzione di manufatti in ferro , la carpenteria metallica C.S.M. esegue lavori di saldatura dei metalli. 
+
+Presso lo stabilimento della ditta si realizzano opere adatte a qualsiasi tipologia di ambiente e su misura per ogni necessità, sia estetica che funzionale. 
+
+L'attività della carpenteria spazia infatti dai più comuni lavori di fabbro ai montaggi meccanici di impianti, passando per la costruzione di strutture metalliche, grigliati e infissi tipo carcerario.
+
+Non esitate a contattare lo staff in sede per ricevere maggiori informazioni sui lavori eseguiti.
+
+*   ![Image 14: carpentiere](https://lirp.cdn-website.com/f6f9e34e/dms3rep/multi/opt/C.S.M+S.N.C.+DI+BERTACCO+S.%26C.+-RIVALTA+DI+TORINO-003-1104w.jpg) ### Slide title
+
+Write your caption here  Button  
+
+[![Image 15: Icona Telefono](https://lirp.cdn-website.com/f6f9e34e/dms3rep/multi/opt/phone-108w.png)](https://www.csm-rivaltaditorino.it/)
+
+Contattate lo staff della carpenteria metallica per preventivi per la lavorazione del ferro e dell'acciaio
+
+[Chiama ora+39 011 9002640](https://www.csm-rivaltaditorino.it/)
+
+### **Sede**
+
+Via Orbassano 48
+
+10040 Rivalta di Torino (TO)
+
+### **Recapiti**
+
+**+39 011 9002640**
+
+**[csm.bertacco@libero.it](mailto:csm.bertacco@libero.it)**
+
+### Orari di apertura
+
+Lun - Ven 8:00 - 12:00 13:30 - 17:00
+
+Sab - Dom Chiuso
+
+[](https://www.csm-rivaltaditorino.it/)
+
+P.I. 04896420017 |[Informazioni Legali](https://www.csm-rivaltaditorino.it/)|[Privacy Policy e Cookie Policy](https://www.csm-rivaltaditorino.it/)
+
+Designed by [![Image 16: Italiaonline](https://iol-website.italiaonline.it/site-resources/footer_italiaonline.png)](https://www.italiaonline.it/)| Questa azienda è presente anche su [![Image 17: Pagine Gialle](https://iol-website.italiaonline.it/site-resources/footer_pg.png)](https://www.paginegialle.it/) e [![Image 18: Pagine Bianche](https://iol-website.italiaonline.it/site-resources/footer_pb.png)](https://www.paginebianche.it/)
+
+ Share by:

@@ -1,0 +1,251 @@
+/* ------------------------------------------------------------------ */
+/* animations.css — presets paired with animations.ts                 */
+/*                                                                    */
+/* Every scroll-based preset is opt-in via `data-anim="<name>"`.      */
+/* animations.ts toggles `.is-revealed` on entry; the CSS here does   */
+/* the actual visual work. CSS-only utilities (hover-inversion,      */
+/* group-hover) work without JS at all.                               */
+/*                                                                    */
+/* All transitions respect `prefers-reduced-motion` — they're         */
+/* neutralized to 0ms near the bottom of this file.                   */
+/* ------------------------------------------------------------------ */
+
+/* Shared CSS vars — overridable per element via inline style or data-* */
+:root {
+  --anim-duration: 0.8s;
+  --anim-delay: 0s;
+  --anim-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --anim-ease-overshoot: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --anim-ease-expo: cubic-bezier(0.19, 1, 0.22, 1);
+  --anim-stagger-step: 0.08s;
+}
+
+/* ------------------------------------------------------------------ */
+/* fade-up                                                            */
+/* ------------------------------------------------------------------ */
+[data-anim='fade-up'] {
+  opacity: 0;
+  transform: translate3d(0, 40px, 0);
+  transition:
+    opacity var(--anim-duration) var(--anim-ease-out) var(--anim-delay),
+    transform var(--anim-duration) var(--anim-ease-out) var(--anim-delay);
+  will-change: opacity, transform;
+}
+
+[data-anim='fade-up'].is-revealed {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+/* ------------------------------------------------------------------ */
+/* clip-reveal                                                        */
+/* ------------------------------------------------------------------ */
+[data-anim='clip-reveal'] {
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path calc(var(--anim-duration) * 1.3) var(--anim-ease-expo)
+    var(--anim-delay);
+  will-change: clip-path;
+}
+
+[data-anim='clip-reveal'].is-revealed {
+  clip-path: inset(0 0 0 0);
+}
+
+/* Circle variant — opt in with data-anim-variant="circle" */
+[data-anim='clip-reveal'][data-anim-variant='circle'] {
+  clip-path: circle(0% at 50% 50%);
+}
+
+[data-anim='clip-reveal'][data-anim-variant='circle'].is-revealed {
+  clip-path: circle(75% at 50% 50%);
+}
+
+/* Diagonal variant */
+[data-anim='clip-reveal'][data-anim-variant='diagonal'] {
+  clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+}
+
+[data-anim='clip-reveal'][data-anim-variant='diagonal'].is-revealed {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+
+/* ------------------------------------------------------------------ */
+/* stagger — children enter one by one                                */
+/* animations.ts seeds --anim-index on each child before reveal.      */
+/* ------------------------------------------------------------------ */
+[data-anim='stagger'] > * {
+  opacity: 0;
+  transform: translate3d(0, 24px, 0);
+  transition:
+    opacity 0.7s var(--anim-ease-out),
+    transform 0.7s var(--anim-ease-out);
+  transition-delay: calc(var(--anim-index, 0) * var(--anim-stagger-step) + var(--anim-delay));
+  will-change: opacity, transform;
+}
+
+[data-anim='stagger'].is-revealed > * {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+/* ------------------------------------------------------------------ */
+/* bounce-in                                                          */
+/* ------------------------------------------------------------------ */
+[data-anim='bounce-in'] {
+  opacity: 0;
+  transform: translate3d(0, 30px, 0) scale(0.92);
+  transition:
+    opacity calc(var(--anim-duration) * 0.8) var(--anim-ease-out) var(--anim-delay),
+    transform var(--anim-duration) var(--anim-ease-overshoot) var(--anim-delay);
+  will-change: opacity, transform;
+}
+
+[data-anim='bounce-in'].is-revealed {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+/* ------------------------------------------------------------------ */
+/* draw-svg                                                           */
+/* animations.ts seeds stroke-dasharray + stroke-dashoffset inline    */
+/* per <path> based on getTotalLength().                              */
+/* ------------------------------------------------------------------ */
+[data-anim='draw-svg'] path,
+[data-anim='draw-svg'] line,
+[data-anim='draw-svg'] polyline,
+[data-anim='draw-svg'] circle,
+[data-anim='draw-svg'] rect,
+[data-anim='draw-svg'] ellipse {
+  transition: stroke-dashoffset calc(var(--anim-duration) * 2) var(--anim-ease-expo)
+    var(--anim-delay);
+}
+
+[data-anim='draw-svg'].is-revealed path,
+[data-anim='draw-svg'].is-revealed line,
+[data-anim='draw-svg'].is-revealed polyline,
+[data-anim='draw-svg'].is-revealed circle,
+[data-anim='draw-svg'].is-revealed rect,
+[data-anim='draw-svg'].is-revealed ellipse {
+  stroke-dashoffset: 0 !important;
+}
+
+/* ------------------------------------------------------------------ */
+/* hover-inversion — pure CSS utility                                 */
+/* Swaps fg/bg on hover with a smooth transition.                     */
+/* ------------------------------------------------------------------ */
+.anim--hover-inversion {
+  background-color: var(--color-bg, transparent);
+  color: var(--color-fg, inherit);
+  transition:
+    background-color 0.35s var(--anim-ease-out),
+    color 0.35s var(--anim-ease-out),
+    border-color 0.35s var(--anim-ease-out);
+}
+
+.anim--hover-inversion:hover,
+.anim--hover-inversion:focus-visible {
+  background-color: var(--color-fg, currentColor);
+  color: var(--color-bg, #fff);
+}
+
+/* ------------------------------------------------------------------ */
+/* group-hover — parent [data-anim-group] coordinates children        */
+/*                                                                    */
+/* Children opt into a behavior via [data-anim-group-child="<op>"].   */
+/* Operations: slide, scale, fade, rotate. Pure CSS.                  */
+/* ------------------------------------------------------------------ */
+[data-anim-group] [data-anim-group-child] {
+  transition: transform 0.45s var(--anim-ease-out),
+    opacity 0.45s var(--anim-ease-out);
+  will-change: transform, opacity;
+}
+
+[data-anim-group]:hover [data-anim-group-child='slide'],
+[data-anim-group]:focus-within [data-anim-group-child='slide'] {
+  transform: translate3d(6px, 0, 0);
+}
+
+[data-anim-group]:hover [data-anim-group-child='scale'],
+[data-anim-group]:focus-within [data-anim-group-child='scale'] {
+  transform: scale(1.04);
+}
+
+[data-anim-group]:hover [data-anim-group-child='fade'],
+[data-anim-group]:focus-within [data-anim-group-child='fade'] {
+  opacity: 1;
+}
+
+[data-anim-group] [data-anim-group-child='fade'] {
+  opacity: 0.5;
+}
+
+[data-anim-group]:hover [data-anim-group-child='rotate'],
+[data-anim-group]:focus-within [data-anim-group-child='rotate'] {
+  transform: rotate(6deg);
+}
+
+/* ------------------------------------------------------------------ */
+/* rotating-text                                                      */
+/* animations.ts toggles .is-rotating-out during the word swap.       */
+/* ------------------------------------------------------------------ */
+.anim--rotating-text {
+  display: inline-block;
+  transition:
+    opacity 0.22s var(--anim-ease-out),
+    transform 0.22s var(--anim-ease-out);
+  will-change: opacity, transform;
+}
+
+.anim--rotating-text.is-rotating-out {
+  opacity: 0;
+  transform: translate3d(0, -0.3em, 0);
+}
+
+/* ------------------------------------------------------------------ */
+/* parallax / cursor-reactive / counter                               */
+/* These are JS-driven — animations.ts writes inline transforms       */
+/* directly. Smooth them out if the element isn't being actively      */
+/* tracked (e.g. mouseleave snapback on cursor-reactive).             */
+/* ------------------------------------------------------------------ */
+[data-anim-cursor] {
+  transition: transform 0.4s var(--anim-ease-out);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+[data-anim-parallax] {
+  will-change: transform;
+}
+
+/* ------------------------------------------------------------------ */
+/* Reduced motion                                                     */
+/* ------------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  [data-anim],
+  [data-anim] > *,
+  .anim--hover-inversion,
+  [data-anim-group] [data-anim-group-child],
+  .anim--rotating-text,
+  [data-anim-cursor],
+  [data-anim-parallax],
+  [data-anim='draw-svg'] path,
+  [data-anim='draw-svg'] line,
+  [data-anim='draw-svg'] polyline,
+  [data-anim='draw-svg'] circle,
+  [data-anim='draw-svg'] rect,
+  [data-anim='draw-svg'] ellipse {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  [data-anim] {
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+  }
+
+  [data-anim='stagger'] > * {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
